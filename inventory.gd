@@ -1,19 +1,16 @@
 # inventory.gd
+
 extends GridContainer
 class_name Inventory
 
 @onready var slots = get_children()
-@onready var item_manager = itemmanager
 
-func _ready() -> void:
-	if item_manager == null:
-		print("ItemManager node not found!")
-
+# Ensure that the correct item type is added to the correct slot.
 func add_item(item: Item):
 	for slot in slots:
-		if slot.item == null:
+		if slot.item == null and slot._item_fits_slot(item):
 			slot.item = item
-			print("Added item to inventory: ", item.type, item.name)
+			print("Added item: ", item.name)
 			return
 
 func remove_item(item: Item):
@@ -22,7 +19,8 @@ func remove_item(item: Item):
 			slot.item = null
 			return
 
-func equip_item_to_character(character: BaseCharacter, item: Item):
-	print( "equip_item_to_character ", character, item.type)
-	if character and item:
-		character.equip_item(item)
+
+#func equip_item_to_character(character: BaseCharacter, item: Item):	
+	#if character and item:
+		#character.equip_item(item)
+		#

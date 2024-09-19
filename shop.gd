@@ -22,14 +22,15 @@ func load_items(items):
 func reset():
 	for slot in get_children():
 		slot.item = null
+	
 
-func buy_item(item: Item, character: BaseCharacter):
-	print("buy item shop ", item, character)
-	if character.currency >= item.price:
-		character.currency -= item.price
-		character.inventory.append(item)
-		equip_item_to_character(character, item)
-		update_shop_ui()
+#func buy_item(item: Item, character: BaseCharacter):
+	#print("buy item shop ", item, character)
+	#if character.currency >= item.price:
+		#character.currency -= item.price
+		#character.inventory.append(item)
+		#equip_item_to_character(character, item)
+		#update_shop_ui()
 
 func update_shop_ui():
 	# Update the shop UI to reflect available items and player's currency

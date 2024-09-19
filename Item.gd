@@ -2,6 +2,8 @@
 class_name Item
 extends Resource
 
+#enum Type {weapon, armor, accessory, main}
+
 @export var icon: Texture2D
 @export var name: String
 @export var type: String  # "weapon", "armor", or "accessory"

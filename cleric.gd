@@ -1,26 +1,20 @@
-# cleric
+# cleric.gd
 extends BaseCharacter
-
-class_name Cleric
 
 @export var heal_amount: int = 40
 @export var heal_cooldown: float = 2.0
 
 @onready var heal_timer = Timer.new()
-@onready var heal_label = $heal_text
-
-
 
 func _ready():
 	max_health = 1600
 	current_health = max_health
 	heal_timer.wait_time = heal_cooldown
 	heal_timer.one_shot = true
-	health_progress_bar.max_value = max_health  # Set max value for the progress bar
-	health_progress_bar.value = current_health  # Initialize progress bar value
 	add_child(heal_timer)
 	heal_timer.connect("timeout", Callable(self, "_on_heal_timeout"))
-
+	health_progress_bar.max_value = max_health
+	health_progress_bar.value = current_health
 	add_to_group("PlayerCharacters")
 
 func _process(delta: float):
@@ -57,7 +51,7 @@ func move_and_heal(target: Node2D, delta: float):
 func heal(target: Node2D):
 	if target.has_method("receive_heal"):
 		target.receive_heal(heal_amount)
-		heal_label.text = "Healed by " + str(heal_amount)
+		#heal_label.text = "Healed by " + str(heal_amount)
 		heal_timer.start()  # Start heal cooldown
 
 # Called when heal timer is done

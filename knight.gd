@@ -1,16 +1,16 @@
 # knight.gd
 extends BaseCharacter
 
-@onready var sprite = $KnightSprite  # Sprite node for knight animations
+@onready var sprite = $KnightSprite
 
 @export var knight_attack_damage: int = 85
 @export var knight_defense: int = 10
 @export var knight_move_speed: int = 60
 @export var knight_max_health: int = 300
-
+@export var knight_attack_cooldown: float = 1.0
 @onready var items = ItemDB
 
-@export var knight_attack_cooldown: float = 1.0
+
 
 @onready var knight_health_progress_bar = $HealthProgressBAr
 
