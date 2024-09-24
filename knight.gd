@@ -31,7 +31,9 @@ func _ready():
 	base_move_speed = knight_move_speed
 	current_health = max_health
 	current_item = null  # Start without any item equipped
-
+	
+	character_type = constants.CharacterType.FIGHTER  # Knights are Fighters
+ 
 	health_progress_bar.max_value = max_health  # Set max value for the progress bar
 	health_progress_bar.value = current_health  # Initialize progress bar value
 
@@ -43,12 +45,11 @@ func _ready():
 
 	add_to_group("PlayerCharacters")
 
-func can_equip(item: Item) -> bool:
-	
-	current_item = item
-	print("can ekip knighr", current_item.attack_bonus, current_item.defense_bonus ,item.name)
-	return true
 
+# Knight-specific overrides for weapon equipping
+func _can_equip_weapon(item: Item) -> bool:
+	# Knights can equip swords and axes
+	return item.weareble == char_type
 
 func _process(delta: float):
 	# Find nearest enemy to attack

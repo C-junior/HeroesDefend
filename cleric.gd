@@ -7,6 +7,7 @@ extends BaseCharacter
 @onready var heal_timer = Timer.new()
 
 func _ready():
+	character_type = constants.CharacterType.HEALER  # Clerics are Healers
 	max_health = 1600
 	current_health = max_health
 	heal_timer.wait_time = heal_cooldown
@@ -16,7 +17,12 @@ func _ready():
 	health_progress_bar.max_value = max_health
 	health_progress_bar.value = current_health
 	add_to_group("PlayerCharacters")
-
+	
+# Cleric-specific overrides for weapon equipping
+func _can_equip_weapon(item: Item) -> bool:
+	# Clerics can only equip staves
+	return item.name == "Mystic Staff"
+	
 func _process(delta: float):
 	# Find nearest injured ally to heal
 	var injured_ally = find_injured_ally()

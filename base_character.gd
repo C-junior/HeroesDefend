@@ -1,8 +1,7 @@
-# base_character.gd
 extends CharacterBody2D
 class_name BaseCharacter
 
-var item = ItemDB
+@export var character_type: int = Constants.CharacterType.FIGHTER  # Default to Fighter for Knight types
 
 @onready var health_label = $HP
 @onready var health_progress_bar = $HealthProgressBAr
@@ -23,13 +22,14 @@ var item = ItemDB
 @export var base_max_health: int = 100
 @export var base_defense: int = 5
 
-# Equipment slots
+# Equipment slots (using type as the key)
 var equipped_items: Dictionary = {
 	"weapon": null,
 	"armor": null,
 	"accessory": null
 }
-
+@onready var knight = get_node("/root/MainGame/PlayerCharacters/Knight")
+@onready var char_type = knight.char_type
 var current_health: int
 @export var attack_timer: Timer = Timer.new()
 var target: Node2D  # The character's current target
@@ -40,44 +40,53 @@ func _ready():
 	health_progress_bar.value = current_health
 	attack_timer = Timer.new()
 	attack_timer.wait_time = attack_cooldown
-	attack_timer.one_shot = true
+	attack_timer.one_shot = true	
 	add_child(attack_timer)
 	attack_timer.connect("timeout", Callable(self, "_on_attack_timeout"))
 	add_to_group("PlayerCharacters")
 	update_stats()
 
+# Determines if the character can equip the given item based on their type and the item's allowed types
+func can_equip(item: Item) -> bool:
+	return item.type in equipped_items.keys() and character_type in item.allowed_types
+
+# Equips the item and updates the stats
 func equip_item(item: Item):
-	if item.type in equipped_items.keys():
+	if can_equip(item):
 		equipped_items[item.type] = item
+		print("Equipped: ", item.name, " to slot: ", item.type)
 	else:
-		print("Item type ", item.type, " is not valid for this character.")
+		print("Cannot equip: ", item.name, " due to character type restrictions.")
 	update_stats()
 
+# Unequips the item by looking for it in the equipped items and removing it
 func unequip_item(item: Item):
-	if item in equipped_items.keys():
-		equipped_items[item] = null
-	else:
-		print("Invalid item: ", item)
-	update_stats()
+	# Search for the item in the equipped_items dictionary
+	for slot in equipped_items:
+		if equipped_items[slot] == item:
+			equipped_items[slot] = null
+			print("Unequipped: ", item.name, " from slot: ", slot)
+			update_stats()
+			return
+	print("Invalid item: ", item)
 
+# Update stats based on the currently equipped items
 func update_stats():
-	# Reset stats to base
+	# Reset stats to base values
 	attack_damage = base_attack_damage
 	defense = base_defense
 	move_speed = base_move_speed
 	max_health = base_max_health
 
-	# Apply equipment bonuses
+	# Apply bonuses from equipped items
 	for slot in equipped_items.keys():
 		var item = equipped_items[slot]
-		if item:
+		if item != null:
 			attack_damage += item.attack_bonus
 			defense += item.defense_bonus
 			move_speed += item.speed_bonus
-			print("Apply equipment bonuses  update tstst", item.name)
 			if slot == "armor":
 				max_health += item.health_bonus
-		
 
 	current_health = min(current_health, max_health)
 	update_health_label()
@@ -117,11 +126,6 @@ func die():
 func _on_attack_timeout():
 	pass
 
-func can_equip(item: Item) -> bool:
-	# Add specific checks if certain characters can't equip certain items
-	return item.type in equipped_items.keys()
-	
-	# Find nearest target (either enemy for attack, or ally for healing)
 func find_nearest_target(group_name: String) -> Node2D:
 	var nearest_node: Node2D = null
 	var shortest_distance = INF

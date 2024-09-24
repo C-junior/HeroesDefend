@@ -20,6 +20,7 @@ config/icon="res://Assets/icon.svg"
 ItemDB="*res://Assets/Items/ItemDatabase.gd"
 UI="*res://ui.tscn"
 itemmanager="*res://item_manager.gd"
+constants="*res://Constants.gd"
 
 [display]
 

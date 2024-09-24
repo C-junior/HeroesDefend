@@ -1,29 +1,30 @@
-# ItemDatabase.gd
+# item_database.gd
 extends Node
 class_name ItemDatabase
 
-# Array to store all available items
 var items: Array[Item] = []
 
 func _ready():
-	# Create items when the game starts
 	create_items()
 
-# Function to create all available items
 func create_items():
-
-	# Weapons
+	# Create weapons
 	var iron_sword = Item.new()
 	iron_sword.name = "Iron Sword"
 	iron_sword.type = "weapon"
-	iron_sword.price = 150
 	iron_sword.icon = preload("res://Assets/Items/sword.png")
-	iron_sword.range_bonus = 1
-	iron_sword.attack_bonus = 15
-	iron_sword.defense_bonus = 0
-	iron_sword.speed_bonus = 0
-	iron_sword.health_bonus = 0
+	iron_sword.attack_bonus = 10
+	iron_sword.allowed_types = [Constants.CharacterType.FIGHTER]  # Only Fighters can equip swords
 	items.append(iron_sword)
+
+	var mystic_staff = Item.new()
+	mystic_staff.name = "Mystic Staff"
+	mystic_staff.type = "weapon"
+	mystic_staff.icon = preload("res://Assets/Items/staff.png")
+	mystic_staff.attack_bonus = 5
+	mystic_staff.allowed_types = [Constants.CharacterType.HEALER, Constants.CharacterType.MAGE]  # Healers and Mages can equip staves
+	items.append(mystic_staff)
+	# Create armor and accessories similarly
 
 	var wooden_bow = Item.new()
 	wooden_bow.name = "Wooden Bow"
@@ -37,17 +38,6 @@ func create_items():
 	wooden_bow.health_bonus = 0
 	items.append(wooden_bow)
 
-	var mystic_staff = Item.new()
-	mystic_staff.name = "Mystic Staff"
-	mystic_staff.type = "weapon"
-	mystic_staff.price = 180
-	mystic_staff.icon = preload("res://Assets/Items/staff.png")
-	mystic_staff.range_bonus = 3
-	mystic_staff.attack_bonus = 8
-	mystic_staff.defense_bonus = 0
-	mystic_staff.speed_bonus = 0
-	mystic_staff.health_bonus = 0
-	items.append(mystic_staff)
 
 	# Armor
 	var gold_plate = Item.new()
@@ -65,6 +55,7 @@ func create_items():
 	var full_armor = Item.new()
 	full_armor.name = "Full Plate Armor"
 	full_armor.type = "armor"
+	
 	full_armor.price = 250
 	full_armor.icon = preload("res://Assets/Items/plate-icon.png")
 	full_armor.range_bonus = 0
@@ -78,6 +69,7 @@ func create_items():
 	var amulet = Item.new()
 	amulet.name = "ring of Strength"
 	amulet.type = "accessory"
+	
 	amulet.price = 220
 	amulet.icon = preload("res://Assets/Items/ring-icon.png")
 	amulet.range_bonus = 0

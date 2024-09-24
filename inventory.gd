@@ -20,6 +20,7 @@ func remove_item(item: Item):
 			return
 
 
+
 #func equip_item_to_character(character: BaseCharacter, item: Item):	
 	#if character and item:
 		#character.equip_item(item)

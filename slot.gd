@@ -4,13 +4,17 @@ class_name Slot
 
 # Enum for item types (weapons, armor, accessory, all)
 enum SlotType { WEAPON, ARMOR, ACCESSORY, ALL }
+enum SlotWeareble { WARRIOR, HEALER , ARCHER, ALL }
 
 # Set the type of the slot (exported to set from the editor)
 @export var slot_type: SlotType = SlotType.ALL
+@export var slot_wear : SlotWeareble = SlotWeareble.ALL
 
 @onready var manager = get_parent().get_parent()
 @onready var texture_rect: TextureRect = $TextureRect
 @onready var item_manager = itemmanager
+
+var active_character: BaseCharacter = null
 
 @export var item : Item = null:
 	set(value):
@@ -19,6 +23,34 @@ enum SlotType { WEAPON, ARMOR, ACCESSORY, ALL }
 			texture_rect.texture = value.icon
 		else:
 			texture_rect.texture = null
+
+# Initialize the slot
+func _ready():
+	# Listen for character switching from the UI
+	get_node("/root/MainGame/UI").connect("character_switched", Callable(self, "_on_character_switched"))
+
+
+# Handle when the character is switched
+func _on_character_switched(character: BaseCharacter):
+	active_character = character
+	update_slot()
+
+func update_slot():
+	if active_character != null:
+		match slot_type:
+			SlotType.WEAPON:
+				item = active_character.equipped_items["weapon"]
+				print("chegou on chracter swith w ", active_character, item)
+			SlotType.ARMOR:
+				item = active_character.equipped_items["armor"]
+				print("chegou on chracter swith a ", active_character, item)
+			SlotType.ACCESSORY:
+				item = active_character.equipped_items["accessory"]
+		if item != null:
+			texture_rect.texture = item.icon
+		else:
+			texture_rect.texture = null
+
 
 func get_preview():
 	var preview_texture = TextureRect.new()
@@ -77,26 +109,35 @@ func _item_fits_slot(item: Item) -> bool:
 			return true  # Allow any item in an ALL slot
 		_:
 			return false
+func _item_wear_slot(item: Item) -> bool:
+	match slot_wear:
+		SlotWeareble.WARRIOR:
+			return item.weareble == "warrior"
+		SlotWeareble.HEALER:
+			return item.weareble == "healer"
+		SlotWeareble.ARCHER:
+			return item.weareble == "archer"
+		SlotWeareble.ALL:
+			return true  # Allow any item in an ALL slot
+		_:
+			return false
 
 func selling(data):
-	var knight = get_tree().current_scene.find_child("Knight")
+	if active_character == null:
+		print("No character selected for selling.")
+		return
+
 	print("Sold " + data.item.name, data.item.price)
 	manager.currency += data.item.price
-	item_manager.unequip_item_from_character(knight, data.item)
+	
+	# Unequip item by calling the unequip_item function
+	item_manager.unequip_item_from_character(active_character, data.item)
 
 func buying(data):
-	var knight = get_tree().current_scene.find_child("Knight")
+	if active_character == null:
+		print("No character selected for buying.")
+		return
+
 	print("Bought " , data.item.type ,data.item.name, data.item.price)
 	manager.currency -= data.item.price
-	item_manager.equip_item_to_character(knight, data.item)
-
-
-	#print("buyins", knight)
-	#if knight:
-				#knight.equip_item(item)
-				#print("equiped ", knight)
-	
-	#print("ekip? ", item_manager.equip_item_to_character(knight))
-	#item_manager.equip_item_to_character(knight)
-	#print(item_manager.equip_item_to_character(knight))
-	#print("cav? ", get_tree().current_scene.find_child("knight"))
+	item_manager.equip_item_to_character(active_character, data.item)
