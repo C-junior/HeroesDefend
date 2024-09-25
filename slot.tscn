@@ -22,3 +22,9 @@ script = ExtResource("1_dk4m4")
 layout_mode = 2
 expand_mode = 1
 stretch_mode = 5
+
+[node name="Tooltip" type="Label" parent="."]
+layout_mode = 2
+
+[node name="InvalidLabel" type="Label" parent="."]
+layout_mode = 2

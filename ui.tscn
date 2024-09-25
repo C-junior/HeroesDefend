@@ -31,6 +31,7 @@ layout_mode = 2
 slot_type = 0
 
 [node name="Label2" type="Label" parent="Manager/Inventory/Slot"]
+visible = false
 layout_mode = 2
 text = "Weapon"
 horizontal_alignment = 1
@@ -69,6 +70,7 @@ offset_right = 663.0
 offset_bottom = 443.0
 columns = 5
 script = ExtResource("5_mdeu6")
+items = null
 
 [node name="Slot" parent="Manager/Shop" instance=ExtResource("4_uyso4")]
 layout_mode = 2

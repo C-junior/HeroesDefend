@@ -4,11 +4,12 @@ class_name Slot
 
 # Enum for item types (weapons, armor, accessory, all)
 enum SlotType { WEAPON, ARMOR, ACCESSORY, ALL }
-enum SlotWeareble { WARRIOR, HEALER , ARCHER, ALL }
+
 
 # Set the type of the slot (exported to set from the editor)
 @export var slot_type: SlotType = SlotType.ALL
-@export var slot_wear : SlotWeareble = SlotWeareble.ALL
+@onready var tooltip = $Tooltip  # Add a tooltip to show who can equip the item
+@onready var invalid_label = $InvalidLabel  # Add a label to show when the item is invalid for the character
 
 @onready var manager = get_parent().get_parent()
 @onready var texture_rect: TextureRect = $TextureRect
@@ -21,6 +22,8 @@ var active_character: BaseCharacter = null
 		item = value
 		if value != null:
 			texture_rect.texture = value.icon
+			
+			#_update_tooltip()  # Update the tooltip text when the item is set
 		else:
 			texture_rect.texture = null
 
@@ -28,7 +31,7 @@ var active_character: BaseCharacter = null
 func _ready():
 	# Listen for character switching from the UI
 	get_node("/root/MainGame/UI").connect("character_switched", Callable(self, "_on_character_switched"))
-
+	invalid_label.visible = false  # Start with the invalid label hidden
 
 # Handle when the character is switched
 func _on_character_switched(character: BaseCharacter):
@@ -48,6 +51,7 @@ func update_slot():
 				item = active_character.equipped_items["accessory"]
 		if item != null:
 			texture_rect.texture = item.icon
+			#_update_tooltip()  # Update the tooltip when switching characters
 		else:
 			texture_rect.texture = null
 
@@ -96,31 +100,25 @@ func _drop_data(_at_position, data):
 	item = data.item
 	data.item = temp
 
-# Check if the item type fits in the current slot type
+func _show_invalid_effect():
+	modulate = Color(1, 0, 0)  # Red modulate color
+	invalid_label.visible = true  # Show a label that indicates the item won't work
+	invalid_label.text = "Item not effective for this character!"
+# Check if the item type fits the active character's allowed types
 func _item_fits_slot(item: Item) -> bool:
-	match slot_type:
-		SlotType.WEAPON:
-			return item.type == "weapon"
-		SlotType.ARMOR:
-			return item.type == "armor"
-		SlotType.ACCESSORY:
-			return item.type == "accessory"
-		SlotType.ALL:
-			return true  # Allow any item in an ALL slot
-		_:
-			return false
-func _item_wear_slot(item: Item) -> bool:
-	match slot_wear:
-		SlotWeareble.WARRIOR:
-			return item.weareble == "warrior"
-		SlotWeareble.HEALER:
-			return item.weareble == "healer"
-		SlotWeareble.ARCHER:
-			return item.weareble == "archer"
-		SlotWeareble.ALL:
-			return true  # Allow any item in an ALL slot
-		_:
-			return false
+	# Ensure the item type matches the slot type (weapon, armor, accessory)
+	if slot_type == SlotType.WEAPON and item.type != "weapon":
+		return false
+	if slot_type == SlotType.ARMOR and item.type != "armor":
+		return false
+	if slot_type == SlotType.ACCESSORY and item.type != "accessory":
+		return false
+	
+	# Ensure the active character is allowed to equip this item
+	if active_character and item.allowed_types.has(active_character.character_type):
+		return true
+	
+	return false
 
 func selling(data):
 	if active_character == null:
@@ -141,3 +139,17 @@ func buying(data):
 	print("Bought " , data.item.type ,data.item.name, data.item.price)
 	manager.currency -= data.item.price
 	item_manager.equip_item_to_character(active_character, data.item)
+
+# Check if the active character can equip the item
+#func _can_character_equip(item: Item) -> bool:
+	#return active_character != null and item.allowed_types.has(active_character.character_type)
+
+# Update the tooltip to show which character types can equip the item
+#func _update_tooltip():
+	#if item != null:
+		#var types = []
+		#for char_type in item.allowed_types:
+			#types.append(str(char_type))
+		#tooltip.text = "Can be equipped by: " + ", ".join(types)
+	#else:
+		#tooltip.text = ""

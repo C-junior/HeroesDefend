@@ -13,7 +13,7 @@ class_name Item
 @export var range_bonus: int = 0
 
 # Add the new allowed_types property
-@export var allowed_types: Array = []
+@export var allowed_types: Array
 
 # Example:
 # allowed_types = [CharacterType.FIGHTER, CharacterType.RANGED]
