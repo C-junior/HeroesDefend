@@ -3,8 +3,12 @@ extends CanvasLayer
 
 @onready var inventory: Inventory = %Inventory   # Shared inventory to display the active character's items
 
-@onready var knight_button = $knight_button
-@onready var cleric_button = $cleric_button
+@onready var knight_button = %knight_button
+@onready var cleric_button = %cleric_button
+@onready var inventory_switch: Panel = $Inventory_switch
+@onready var ativechar: Button = $Inventory_switch/ativechar
+
+
 
 @onready var knight = get_node("/root/MainGame/PlayerCharacters/Knight")
 @onready var cleric = get_node("/root/MainGame/PlayerCharacters/Cleric")
@@ -17,28 +21,42 @@ var active_character: BaseCharacter = null
 
 func _ready():
 	# Connect buttons to character switch functions
-	knight_button.connect("pressed", Callable(self, "_on_knight_button_pressed"))
-	cleric_button.connect("pressed", Callable(self, "_on_cleric_button_pressed"))
+	#knight_button.connect("pressed", Callable(self, "_on_knight_button_pressed"))
+	#cleric_button.connect("pressed", Callable(self, "_on_cleric_button_pressed"))	
 	
 	# Initialize with Cleric as the default active character
-	switch_to_character(cleric)
+	switch_to_character(knight)
+	set_buttons_transparency(true) 
+	
 
 enum MODE {
 	INVENTORY,
 	SHOP
 }
 
+func set_buttons_transparency(transparent: bool):
+	var transparency = Color(1, 1, 1, 1)  # Full opacity
+	if transparent:
+		transparency.a = 0  # Make fully transparent
+
+	knight_button.modulate = transparency
+	cleric_button.modulate = transparency
+	inventory_switch.modulate = transparency
+
 func open_mode(mode, items):
 	%Shop.load_items(items)
 	$Manager.open_mode(mode)
 	
+	
 # Called when the Knight button is pressed
 func _on_knight_button_pressed():
 	switch_to_character(knight)
-
+	ativechar.text = "Knight"
 # Called when the Cleric button is pressed
 func _on_cleric_button_pressed():
 	switch_to_character(cleric)
+	ativechar.text = "Cleric"
+
 
 # Function to switch to the selected character and update the shared inventory
 func switch_to_character(character: BaseCharacter):
@@ -51,6 +69,7 @@ func switch_to_character(character: BaseCharacter):
 	update_inventory_with_character_items(character)
 
 	print("Switched to character:", active_character.name)
+	
 
 
 func update_inventory_with_character_items(character: BaseCharacter):

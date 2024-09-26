@@ -27,7 +27,8 @@ func add_item(item: Item):
 				
 				print("Allowed types: ", joined_names)
 				
-				slot.tooltip_text = "%s \n %s" % [item.name, joined_names]
+				slot.tooltip_text = "Nome:  %s \n Equipavel em %s \n Atributos : \n  ATK : %s \n  DEF : %s
+				" % [ item.name, joined_names, item.attack_bonus, item.defense_bonus]
 			return
 
 func remove_item(item: Item):

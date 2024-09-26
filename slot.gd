@@ -116,6 +116,7 @@ func _item_fits_slot(item: Item) -> bool:
 	
 	# Ensure the active character is allowed to equip this item
 	if active_character and item.allowed_types.has(active_character.character_type):
+		print("chegou item fit slot ", active_character)
 		return true
 	
 	return false

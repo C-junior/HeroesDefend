@@ -13,6 +13,8 @@ extends Node2D
 @onready var knight: CharacterBody2D = $PlayerCharacters/Knight
 
 
+
+
 var current_wave = 1  # Tracks the current wave number
 var max_waves = 10  # You can set the number of waves
 var wave_in_progress = false
@@ -22,6 +24,7 @@ func _ready():
 	start_wave()
 	knight_atk.text = str(knight.knight_attack_damage)
 	knight_def.text = str(knight.knight_defense)
+	
 
 	# Connect wave manager timer to handle new waves
 	wave_manager.connect("timeout", Callable(self, "start_wave"))
@@ -53,11 +56,12 @@ func check_wave_completion():
 			print("Wave cleared!")
 			# Open shop after the wave is cleared
 			open_shop()
-
+			
 func open_shop():
 	# Pause the game and open the shop after the wave
 	get_tree().paused = true
 	vendor.interact()  # Trigger vendor interaction to open the shop
+	
 
 func close_shop():
 	# Close shop and resume game to start the next wave

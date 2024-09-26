@@ -31,7 +31,7 @@ position = Vector2(199, 308)
 [node name="WaveManager" type="Timer" parent="."]
 
 [node name="Vendor" parent="." instance=ExtResource("11_w0ngy")]
-position = Vector2(277, 42)
+position = Vector2(6, 11)
 
 [node name="WaveLabel" type="Label" parent="."]
 offset_left = 375.0
