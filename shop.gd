@@ -4,7 +4,7 @@ extends Inventory
 @onready var close_button = $"../CloseButton"  # Reference to the Close Button
 @onready var reroll_button: Button = $"../RerollButton"
 @onready var item_database = ItemDB  # Item database (autoload)
-@onready var manager = get_parent()
+@onready var manager = global
 @onready var vendor = get_tree().get_root().get_node("MainGame/Vendor")
 
 @export var items : Array[Item] = []
@@ -51,5 +51,6 @@ func _on_reroll_button_pressed():
 	manager.currency -= 20
 	var all_items = item_database.get_all_items()
 	var new_items = vendor.get_random_items(all_items, 5)  # Fetch new items from item manager
-	print("Rerolling items...", new_items[0].name)
+	print("Rerolling items...", manager.currency)
 	load_items(new_items)  # Load new items into the shop
+	global._update_balance_ui()

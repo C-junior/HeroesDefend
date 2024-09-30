@@ -16,7 +16,6 @@ func add_item(item: Item):
 			for allowed_type in item.allowed_types:
 				allowed_type_names.append(constant.character_type_names[allowed_type])
 				
-				print("Added item: ", item.name)
 				
 				# Create a string manually
 				var joined_names = ""
@@ -25,7 +24,6 @@ func add_item(item: Item):
 						joined_names += ", "
 					joined_names += name
 				
-				print("Allowed types: ", joined_names)
 				
 				slot.tooltip_text = "Nome:  %s \n Equipavel em %s \n Atributos : \n  ATK : %s \n  DEF : %s
 				" % [ item.name, joined_names, item.attack_bonus, item.defense_bonus]

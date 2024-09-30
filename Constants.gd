@@ -17,8 +17,8 @@ var character_type_names = {
 	CharacterType.MAGE: "Mage"
 }
 
-func _ready() -> void:
-	print("Constants loaded", character_type_names)
+
+	
 
 #func nameType():
 	#if CharacterType == 0:

@@ -20,3 +20,19 @@ func _process(delta: float):
 	
 	if target:
 		move_and_attack(target, delta)
+		
+@export var xp_reward: int = 100
+@export var gold_reward: int = 20
+
+# Override the die function to reward XP and gold
+func die():
+	# Grant XP and gold to all player characters
+	var party_manager = get_tree().root.get_node("MainGame/PlayerCharacters")
+	print("die func ", party_manager.name)
+	for player in party_manager.get_children():
+		if player.has_method("add_xp_to_party"):
+			player.add_xp_to_party(xp_reward)
+			player.add_gold(gold_reward)
+			
+
+	queue_free()

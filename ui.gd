@@ -87,7 +87,6 @@ func update_inventory_with_character_items(character: BaseCharacter):
 				inventory.get_children()[1].item = item
 			elif slot_name == "accessory":
 				inventory.get_children()[2].item = item
-	print("var slot on ui index of char ", character," and inventory 1 ", inventory.get_children()[0].item, " and inventory armor ", inventory.get_children()[1].item )
 
 # Function to update the shared inventory (%Inventory) with the active character's equipped items
 #func update_inventory_with_character_items():

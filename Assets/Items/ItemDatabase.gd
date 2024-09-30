@@ -91,5 +91,5 @@ func create_items():
 
 # Function to get all available items
 func get_all_items() -> Array[Item]:
-	print("chegou em get all", items)
+	
 	return items

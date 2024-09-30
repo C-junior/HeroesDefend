@@ -47,9 +47,9 @@ func _ready():
 
 
 # Knight-specific overrides for weapon equipping
-func _can_equip_weapon(item: Item) -> bool:
-	# Knights can equip swords and axes
-	return item.weareble == char_type
+#func _can_equip_weapon(item: Item) -> bool:
+	## Knights can equip swords and axes
+	#return item.weareble == char_type
 
 func _process(delta: float):
 	# Find nearest enemy to attack

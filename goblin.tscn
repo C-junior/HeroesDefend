@@ -59,6 +59,8 @@ script = ExtResource("2_y8wxr")
 enemy_name = "Goblin"
 enemy_attack_damage = 18
 enemy_move_speed = 40
+xp_reward = 100
+gold_reward = 20
 attack_timer = NodePath("Timer")
 
 [node name="HP" parent="." index="1"]
