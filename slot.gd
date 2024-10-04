@@ -99,10 +99,7 @@ func _drop_data(_at_position, data):
 	item = data.item
 	data.item = temp
 
-func _show_invalid_effect():
-	modulate = Color(1, 0, 0)  # Red modulate color
-	invalid_label.visible = true  # Show a label that indicates the item won't work
-	invalid_label.text = "Item not effective for this character!"
+
 # Check if the item type fits the active character's allowed types
 func _item_fits_slot(item: Item) -> bool:
 	# Ensure the item type matches the slot type (weapon, armor, accessory)

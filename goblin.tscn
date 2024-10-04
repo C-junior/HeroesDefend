@@ -54,14 +54,13 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Goblin" node_paths=PackedStringArray("attack_timer") groups=["Enemies"] instance=ExtResource("1_w23yf")]
+[node name="Goblin" groups=["Enemies"] instance=ExtResource("1_w23yf")]
 script = ExtResource("2_y8wxr")
 enemy_name = "Goblin"
 enemy_attack_damage = 18
 enemy_move_speed = 40
 xp_reward = 100
 gold_reward = 20
-attack_timer = NodePath("Timer")
 
 [node name="HP" parent="." index="1"]
 offset_left = -18.0

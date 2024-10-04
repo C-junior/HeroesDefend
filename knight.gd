@@ -50,6 +50,9 @@ func _ready():
 #func _can_equip_weapon(item: Item) -> bool:
 	## Knights can equip swords and axes
 	#return item.weareble == char_type
+func learn_skill(skill_name: String):
+	print("Knight learned skill:", skill_name)
+	# You can add unique skill effects here based on the skill learned
 
 func _process(delta: float):
 	# Find nearest enemy to attack

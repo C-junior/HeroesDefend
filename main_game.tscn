@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://kuka26t1av42"]
+[gd_scene load_steps=9 format=3 uid="uid://kuka26t1av42"]
 
 [ext_resource type="Script" path="res://main_game.gd" id="1_1xiyh"]
 [ext_resource type="Texture2D" uid="uid://dlplcfdehgpxh" path="res://Assets/arena_bg.jpg" id="1_5dba5"]
 [ext_resource type="PackedScene" uid="uid://djgsammf8qp81" path="res://knight.tscn" id="2_nqt4s"]
 [ext_resource type="PackedScene" uid="uid://chgkv5dsnjvcr" path="res://cleric.tscn" id="3_jng1e"]
+[ext_resource type="PackedScene" uid="uid://b1qje0vy6urla" path="res://valkyrie.tscn" id="5_4l462"]
 [ext_resource type="PackedScene" uid="uid://ck34trga36w3" path="res://ui.tscn" id="5_wscre"]
 [ext_resource type="PackedScene" uid="uid://dwusg6yb1iy13" path="res://vendor.tscn" id="11_w0ngy"]
 
@@ -26,12 +27,16 @@ position = Vector2(285, 266)
 [node name="Cleric" parent="PlayerCharacters" instance=ExtResource("3_jng1e")]
 position = Vector2(199, 308)
 
+[node name="Valkyrie" parent="PlayerCharacters" instance=ExtResource("5_4l462")]
+position = Vector2(320, 337)
+
 [node name="Enemies" type="Node2D" parent="."]
 
 [node name="WaveManager" type="Timer" parent="."]
 
 [node name="Vendor" parent="." instance=ExtResource("11_w0ngy")]
 position = Vector2(6, 11)
+frame_progress = 0.617217
 
 [node name="WaveLabel" type="Label" parent="."]
 offset_left = 375.0
@@ -41,6 +46,7 @@ offset_bottom = 27.0
 label_settings = SubResource("LabelSettings_n6nty")
 
 [node name="UI" parent="." instance=ExtResource("5_wscre")]
+visible = false
 
 [node name="knight atk" type="Label" parent="."]
 offset_left = 127.0

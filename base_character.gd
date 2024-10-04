@@ -8,6 +8,7 @@ class_name BaseCharacter
 @onready var health_progress_bar = $HealthProgressBAr
 @onready var popuploc = $PopupLocation
 @onready var level_label: Label = $LevelLabel
+#@onready var skill_popup = get_node("/root/UI/SkillPanel")  # Path to skill popup panel
 
 
 # Stats and growths
@@ -37,8 +38,10 @@ var current_health: int
 @export var attack_timer: Timer = Timer.new()
 var target: Node2D  # Current attack target
 
+var learned_skills: Array = []
 # Reference to the level system
-@onready var level_system = LevelSystem.new()
+signal level_up_skill_popup
+@onready var level_system = LevelSystem.new()  # Assuming your LevelSystem handles leveling
 
 func _ready():
 	current_health = max_health
@@ -52,6 +55,7 @@ func _ready():
 	update_stats()
 	level_system.connect("leveled_up", Callable(self, "_on_leveled_up"))
 	update_level_ui()
+
 	
 
 # Determines if an item can be equipped
@@ -168,6 +172,43 @@ func _on_leveled_up():
 	current_health = max_health
 	update_stats()
 	update_level_ui()
+
+# Emit global signal if level is a multiple of 5
+	#var cleric = get_tree().current_scene.find_child("cleric")
+## Check if the character has reached a level divisible by 5
+	#if level_system.level % 5 == 0 and level_system.level != last_skill_popup_level:
+		#last_skill_popup_level = level_system.level  # Update the last level the popup showed
+		#global.emit_signal("level_up_skill_popup")
+		#print("Reached level", level_system.level, ". Showing skill selection.")
+# Function to learn a skill
+func learn_skill(skill_name: String):
+	if skill_name not in learned_skills:
+		learned_skills.append(skill_name)
+		print(name + " has learned the skill: " + skill_name)
+
+	# Update character stats based on the skill learned
+	match skill_name:
+		"KnightSkill1":
+			attack_damage += 10
+		"KnightSkill2":
+			defense += 5
+		"KnightSkill3":
+			move_speed += 10
+		"ClericSkill1":
+			max_health += 10
+		"ClericSkill2":
+			max_health += 20
+		"ClericSkill3":
+			defense += 3
+		"ValkyrieSkill1":
+			attack_damage += 8
+		"ValkyrieSkill2":
+			max_health += 25
+		"ValkyrieSkill3":
+			move_speed += 5
+		_:
+			print("Unknown skill: " + skill_name)
+
 
 # Update the level label UI
 func update_level_ui():

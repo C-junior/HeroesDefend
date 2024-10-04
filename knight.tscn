@@ -81,7 +81,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Knight" node_paths=PackedStringArray("attack_timer") groups=["PlayerCharacters"] instance=ExtResource("1_ytoxj")]
+[node name="Knight" groups=["PlayerCharacters"] instance=ExtResource("1_ytoxj")]
 z_index = 10
 position = Vector2(146, 79)
 script = ExtResource("1_146xs")
@@ -91,7 +91,6 @@ knight_move_speed = 60
 knight_max_health = 300
 knight_attack_cooldown = 1.0
 current_item = null
-attack_timer = NodePath("Timer")
 
 [node name="KnightSprite" type="AnimatedSprite2D" parent="." index="0"]
 z_index = 10
