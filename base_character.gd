@@ -8,7 +8,10 @@ class_name BaseCharacter
 @onready var health_progress_bar = $HealthProgressBAr
 @onready var popuploc = $PopupLocation
 @onready var level_label: Label = $LevelLabel
-#@onready var skill_popup = get_node("/root/UI/SkillPanel")  # Path to skill popup panel
+#@onready var skill_name_location: Marker2D = $SkillNameLocation
+
+
+
 
 
 # Stats and growths
@@ -34,11 +37,15 @@ class_name BaseCharacter
 # Equipment dictionary
 var equipped_items: Dictionary = {"weapon": null, "armor": null, "accessory": null}
 
+# Character skill management
+var active_skills = []  # Stores the active skills with cooldowns
+#var skill_cooldowns = {}  # Tracks cooldowns of active skills
+var learned_skills: Array = []
+
 var current_health: int
 @export var attack_timer: Timer = Timer.new()
 var target: Node2D  # Current attack target
 
-var learned_skills: Array = []
 # Reference to the level system
 signal level_up_skill_popup
 @onready var level_system = LevelSystem.new()  # Assuming your LevelSystem handles leveling
@@ -66,7 +73,7 @@ func can_equip(item: Item) -> bool:
 func equip_item(item: Item):
 	if can_equip(item):
 		equipped_items[item.type] = item
-		print("Equipped: ", item.name, " to slot: ", item.type)
+		#print("Equipped: ", item.name, " to slot: ", item.type)
 	else:
 		print("Cannot equip: ", item.name, " due to character type restrictions.")
 	update_stats()
@@ -96,6 +103,19 @@ func update_stats():
 			move_speed += item.speed_bonus
 			if slot == "armor":
 				max_health += item.health_bonus
+	for skill in learned_skills:
+		print("Checking skill: ", skill.name, "learn skills ", learned_skills)
+		
+		if skill != null:
+			if skill.name == "Weapon Mastery":
+				attack_damage += skill.attack_bonus
+				print("Applied weapon mastery bonus: ", skill.attack_bonus)
+			elif skill.name == "Defense Mastery":
+				defense += skill.defense_bonus
+				print("Applied defense mastery bonus: ", skill.defense_bonus)
+			elif skill.name == "Crescendo":
+				max_health += skill.health_bonus
+				print("Applied defense mastery bonus: ", skill.health_bonus)
 
 	current_health = min(current_health, max_health)
 	update_health_label()
@@ -166,48 +186,13 @@ func receive_heal(heal: int):
 
 # Handle level-up and stat growth
 func _on_leveled_up():
-	max_health += health_growth
+	max_health += health_growth 
 	attack_damage += damage_growth
 	defense += defense_growth
 	current_health = max_health
 	update_stats()
 	update_level_ui()
 
-# Emit global signal if level is a multiple of 5
-	#var cleric = get_tree().current_scene.find_child("cleric")
-## Check if the character has reached a level divisible by 5
-	#if level_system.level % 5 == 0 and level_system.level != last_skill_popup_level:
-		#last_skill_popup_level = level_system.level  # Update the last level the popup showed
-		#global.emit_signal("level_up_skill_popup")
-		#print("Reached level", level_system.level, ". Showing skill selection.")
-# Function to learn a skill
-func learn_skill(skill_name: String):
-	if skill_name not in learned_skills:
-		learned_skills.append(skill_name)
-		print(name + " has learned the skill: " + skill_name)
-
-	# Update character stats based on the skill learned
-	match skill_name:
-		"KnightSkill1":
-			attack_damage += 10
-		"KnightSkill2":
-			defense += 5
-		"KnightSkill3":
-			move_speed += 10
-		"ClericSkill1":
-			max_health += 10
-		"ClericSkill2":
-			max_health += 20
-		"ClericSkill3":
-			defense += 3
-		"ValkyrieSkill1":
-			attack_damage += 8
-		"ValkyrieSkill2":
-			max_health += 25
-		"ValkyrieSkill3":
-			move_speed += 5
-		_:
-			print("Unknown skill: " + skill_name)
 
 
 # Update the level label UI
@@ -218,10 +203,22 @@ func update_level_ui():
 func add_xp_to_party(amount: int):
 	for player in get_tree().get_nodes_in_group("PlayerCharacters"):
 		player.level_system.add_xp(amount)
-		print(player.name + " earned XP: ", amount)
+		
 		_on_leveled_up()
 
 # Add global gold when enemy dies
 func add_gold(gold: int):
 	global.add_currency(gold)  # Update global currency
-	print("Gold added: ", gold)
+	
+
+# Method to learn a new skill
+func learn_skill(skill: Skill):
+	print("Learning skill: ", skill.name)
+	if skill.is_passive:
+		# Apply the passive effect immediately
+		skill.apply_passive_effect(self)
+	else:
+		# Add active skills to the active skills list
+		active_skills.append(skill)
+
+	print("Skill learned: ", skill.name)

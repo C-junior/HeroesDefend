@@ -6,7 +6,7 @@ var items: Array[Item] = []
 
 var  healer = Constants.CharacterType.HEALER
 var  fighter = Constants.CharacterType.FIGHTER
-var  ranged = Constants.CharacterType.RANGED
+var  Valkyrie = Constants.CharacterType.VALKYRIE
 var  mage = Constants.CharacterType.MAGE
 
 
@@ -20,7 +20,7 @@ func create_items():
 	iron_sword.allowed_types = [fighter]
 	iron_sword.type = "weapon"
 	iron_sword.icon = preload("res://Assets/Items/sword.png")
-	iron_sword.attack_bonus = 10
+	iron_sword.attack_bonus = 101
 	items.append(iron_sword)
 
 	var mystic_staff = Item.new()
@@ -35,7 +35,7 @@ func create_items():
 	var wooden_bow = Item.new()
 	wooden_bow.name = "Wooden Bow"
 	wooden_bow.type = "weapon"
-	wooden_bow.allowed_types = [ranged]
+	wooden_bow.allowed_types = [Valkyrie]
 	wooden_bow.price = 100
 	wooden_bow.icon = preload("res://Assets/Items/axe.png")
 	wooden_bow.range_bonus = 5
@@ -63,7 +63,7 @@ func create_items():
 	var full_armor = Item.new()
 	full_armor.name = "Full Plate Armor"
 	full_armor.type = "armor"
-	full_armor.allowed_types = [healer, mage, fighter,ranged]
+	full_armor.allowed_types = [healer, mage, fighter,Valkyrie]
 	full_armor.price = 250
 	full_armor.icon = preload("res://Assets/Items/plate-icon.png")
 	full_armor.range_bonus = 0
@@ -84,7 +84,7 @@ func create_items():
 	amulet.attack_bonus = 5
 	amulet.defense_bonus = 0
 	amulet.speed_bonus = 0
-	amulet.allowed_types = [healer, mage, fighter,ranged]
+	amulet.allowed_types = [healer, mage, fighter,Valkyrie]
 	amulet.health_bonus = 15
 	items.append(amulet)
 

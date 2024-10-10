@@ -63,6 +63,9 @@ func heal(target: Node2D):
 # Called when heal timer is done
 func _on_heal_timeout():
 	pass
-func learn_skill(skill_name: String):
-	print("clric learned skill:", skill_name)
-	# You can add unique skill effects here based on the skill learned
+# In knight.gd, cleric.gd, valkyrie.gd, etc.
+func learn_skill(skill: Skill):
+	# Apply the skill's effect to the character
+	skill.apply_effect(self)
+	print("Learned skill: ", skill.name)
+	#trigger_cooldown_skill(skill)  # Start the cooldown for the skill

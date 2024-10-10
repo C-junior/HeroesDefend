@@ -6,14 +6,14 @@ class_name Constants
 enum CharacterType {
 	FIGHTER, 
 	HEALER, 
-	RANGED, 
+	VALKYRIE, 
 	MAGE
 }
 
 var character_type_names = {
 	CharacterType.HEALER: "Healer",
 	CharacterType.FIGHTER: "Fighter",
-	CharacterType.RANGED: "Ranged",
+	CharacterType.VALKYRIE: "Valkyrie",
 	CharacterType.MAGE: "Mage"
 }
 

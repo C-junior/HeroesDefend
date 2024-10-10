@@ -168,7 +168,6 @@ unique_name_in_owner = true
 layout_mode = 2
 
 [node name="SkillPanel" type="Panel" parent="."]
-visible = false
 offset_left = 67.0
 offset_top = 44.0
 offset_right = 675.0
@@ -244,3 +243,4 @@ text = "Voltar pro Game"
 [connection signal="pressed" from="knight_button" to="." method="_on_knight_button_pressed"]
 [connection signal="pressed" from="valkyrie_button" to="." method="_on_valkyrie_button_pressed"]
 [connection signal="pressed" from="cleric_button" to="." method="_on_cleric_button_pressed"]
+[connection signal="pressed" from="SkillPanel/ConfirmButton" to="." method="_on_confirm_button_pressed"]

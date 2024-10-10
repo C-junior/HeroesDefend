@@ -23,7 +23,7 @@ func _ready():
 	base_move_speed = valkyrie_move_speed
 	current_health = max_health
 	current_item = null  # Start without any item equipped
-	character_type = constants.CharacterType.FIGHTER
+	character_type = constants.CharacterType.VALKYRIE
 	health_progress_bar.max_value = max_health  # Set max value for the progress bar
 	health_progress_bar.value = current_health  # Initialize progress bar value
 
@@ -41,10 +41,12 @@ func can_equip(item: Item) -> bool:
 		return true
 	return false
 
-# Custom Valkyrie skill learning
-func learn_skill(skill_name: String):
-	print("Valkyrie learned skill:", skill_name)
-	# You can add unique skill effects here based on the skill learned
+
+func learn_skill(skill: Skill):
+	# Apply the skill's effect to the character
+	skill.apply_effect(self)
+	print("Learned skill: ", skill.name)
+	#trigger_cooldown_skill(skill)  # Start the cooldown for the skill
 
 func _process(delta: float):
 	# Find nearest enemy to attack

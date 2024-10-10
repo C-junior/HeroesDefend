@@ -10,6 +10,10 @@ extends BaseCharacter
 @export var knight_attack_cooldown: float = 1.0
 @onready var items = ItemDB
 
+# Skill-related variables
+#var learned_skills: Array = []
+var cooldown_timers: Dictionary = {}
+var charge_skill: Skill = null  # Store the charge skill reference
 
 
 @onready var knight_health_progress_bar = $HealthProgressBAr
@@ -44,18 +48,57 @@ func _ready():
 	update_health_label()
 
 	add_to_group("PlayerCharacters")
+	# Initialize timers for skill usage
+	learned_skills = []
+	
 
+# Learn a new skill and initialize its timers
+func learn_skill(skill: Skill):
+	learned_skills.append(skill)
+	_setup_skill_cooldown(skill)
+	print("Learned skill:", skill.name)
+	print("all skills are ", learned_skills[0].name)
+	# Initialize skill within the character context (call init)
+	skill.init(self)  # Initialize timers within the character
+	
+	if skill.name == "Charge":
+		charge_skill = skill
 
-# Knight-specific overrides for weapon equipping
-#func _can_equip_weapon(item: Item) -> bool:
-	## Knights can equip swords and axes
-	#return item.weareble == char_type
-func learn_skill(skill_name: String):
-	print("Knight learned skill:", skill_name)
-	# You can add unique skill effects here based on the skill learned
+# Set up cooldown timers for skills
+func _setup_skill_cooldown(skill: Skill):
+	if skill.cooldown > 0:
+		var timer = Timer.new()
+		timer.one_shot = true
+		timer.wait_time = skill.cooldown
+		cooldown_timers[skill] = timer
+		add_child(timer)
+
+# Called when a skill's cooldown finishes
+func _on_skill_ready(skill: Skill):
+	print("Skill ready again:", skill.name)
+	sprite.modulate = Color(0,1,0)
+
+# Trigger the skill and start cooldown
+func use_skills():
+	for skill in learned_skills:
+		if cooldown_timers.has(skill) and cooldown_timers[skill].is_stopped():
+			skill.apply_effect(self)
+			cooldown_timers[skill].start()
+			print("Skill used:", skill.name)
+			sprite.modulate = Color(1,1,1)
+
+# Update charge movement over time
+func update_charge_movement(delta: float):
+	if charge_skill != null:
+		charge_skill.update_charge(delta, self)  # Call the charge update from the skill
 
 func _process(delta: float):
+	# Update charge movement if active
+	update_charge_movement(delta)
+
 	# Find nearest enemy to attack
 	target = find_nearest_target("Enemies")
 	if target:
 		move_and_attack(target, delta)
+
+	use_skills()
