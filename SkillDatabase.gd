@@ -9,19 +9,19 @@ func _ready():
 	# Knight Skills
 	skills[Constants.CharacterType.FIGHTER] = {
 		2: [
-			_create_vorpal_slash(),  # Active skill with its own script
-			_create_weapon_mastery(),  # Passive skill
+			_create_shield_bash(),  # Active skill with its own script
+			_create_might_aura(),  # Passive skill
 			_create_charge()  # Active skill
 		],
 		4: [
-			_create_shield_bash(),  # Passive skill
+			_create_vorpal_slash(),  # Passive skill
 			_create_defense_mastery(),  # Active skill
-			_create_big_shield()  # Active skill
+			_create_weapon_mastery()# Active skill
 		],
 		6: [
 			_create_crescendo(),  # Passive skill
-			_create_might_aura(),  # Active skill
-			_create_taunt()  # Active skill
+			_create_taunt(),  # Active skill
+			_create_big_shield() # Active skill
 		]
 	}
 	# Skills for the Cleric
@@ -120,7 +120,7 @@ func _create_taunt() -> Skill:
 	var taunt = load("res://Skills/taunt.gd").new()
 	taunt.name = "Taunt"
 	taunt.description = "Force all enemies to attack you for 5 seconds."
-	taunt.cooldown = 12
+	taunt.cooldown = 8
 	taunt.icon = load("res://Assets/Icons/icon_taunt.png")
 	return taunt
 

@@ -11,7 +11,10 @@ class_name BaseCharacter
 #@onready var skill_name_location: Marker2D = $SkillNameLocation
 
 
-
+#skills var
+var shield_block_count: int = 0  # Tracks how many attacks can be blocked
+var is_stunned: bool = false  # Track stun state
+@export var stun_timer: Timer = Timer.new()
 
 
 # Stats and growths
@@ -63,7 +66,10 @@ func _ready():
 	level_system.connect("leveled_up", Callable(self, "_on_leveled_up"))
 	update_level_ui()
 
-	
+	# Initialize stun timer
+	stun_timer.one_shot = true
+	stun_timer.connect("timeout", Callable(self, "_on_stun_end"))
+	add_child(stun_timer)
 
 # Determines if an item can be equipped
 func can_equip(item: Item) -> bool:
@@ -131,16 +137,31 @@ func attack(target: Node2D):
 		attack_timer.start()
 
 # Handle taking damage
+# Activate the shield with a set number of blocks
+func activate_shield(blocks: int):
+	shield_block_count = blocks
+	print("Shield activated with", blocks, "blocks.")
+
+# Override the take_damage method to reduce block count if shield is active
 func take_damage(damage: int):
-	var reduced_damage = max(damage - defense, 0)
-	current_health -= reduced_damage
-	popuploc.popup(-reduced_damage)  # Damage popup
-	update_health_label()
-	health_progress_bar.value = current_health
-	if current_health <= 0:
-		die()
+	if shield_block_count > 0:
+		shield_block_count -= 1
+		print("Blocked attack! Remaining blocks:", shield_block_count)
+		if shield_block_count == 0:
+			print("Shield has been broken!")
+	else:
+		var reduced_damage = max(damage - defense, 0)
+		current_health -= reduced_damage
+		popuploc.popup(-reduced_damage)  # Display damage popup
+		update_health_label()
+		health_progress_bar.value = current_health
+		if current_health <= 0:
+			die()
 
 func move_and_attack(target: Node2D, delta: float):
+	if is_stunned:
+		velocity = Vector2.ZERO
+		return  # Skip movement and attack while stunned
 	var direction = (target.global_position - global_position).normalized()
 	if global_position.distance_to(target.global_position) > attack_range:
 		velocity = direction * move_speed
@@ -222,3 +243,30 @@ func learn_skill(skill: Skill):
 		active_skills.append(skill)
 
 	print("Skill learned: ", skill.name)
+# Process movement and attack if not stunned
+
+# Stun the character for a duration
+func stun(duration: float) -> void:
+	if is_stunned:
+		return  # Ignore if already stunned
+	is_stunned = true
+	print("Character stunned for", duration, "seconds.")
+	velocity = Vector2.ZERO  # Stop movement
+	stun_timer.start()  # Start the stun timer
+	stun_timer.wait_time = duration
+
+func stunned():
+	if is_stunned == true:
+		target.sprite.modulate = Color(1,0,0)
+		print("stuned ", target)
+# Called when stun duration ends
+func _on_stun_end() -> void:
+	is_stunned = false
+	print("Stun ended.")
+
+	target.sprite.modulate = Color(1,1,1)
+
+#func _process(delta: float):
+	#if not is_stunned:
+		#move_and_attack(target, delta)  # Movement logic
+		#

@@ -33,11 +33,6 @@ func _trigger_charge(character: BaseCharacter) -> void:
 	var target_enemy: Node = null
 	var max_distance: float = 0.0
 
- # Display the skill name using the skill_popup script
-	var skill_popup = skill_popup_scene.instantiate()  # Correctly instantiate the popup scene
-	skill_popup.position = character.global_position + Vector2(0, -50)  # Position above character
-	character.get_parent().add_child(skill_popup)
-	skill_popup.popup(name)  # Call the popup function with the skill name
 
 	# Find the most distant enemy
 	for enemy in enemies:

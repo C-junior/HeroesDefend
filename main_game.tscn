@@ -22,6 +22,7 @@ texture = ExtResource("1_5dba5")
 
 [node name="Knight" parent="PlayerCharacters" instance=ExtResource("2_nqt4s")]
 position = Vector2(285, 266)
+knight_defense = 1
 
 [node name="Cleric" parent="PlayerCharacters" instance=ExtResource("3_jng1e")]
 position = Vector2(199, 308)

@@ -2,7 +2,7 @@
 extends Marker2D
 
 @export var skill_name_shout: PackedScene
-var pai = get_parent()
+
 
 func popup():
 	var skill_name = skill_name_shout.instantiate()
@@ -14,6 +14,7 @@ func popup():
 	tween.tween_property(skill_name, "position", global_position + get_direction, 0.75 )
 	get_tree().current_scene.add_child(skill_name)
 	
+	var pai = get_tree().current_scene.find_child("Knight")
 	
 	if pai.update_level_ui:
 		var animation_player = skill_name.get_node("AnimationPlayer")  # Adjust the path if needed
@@ -21,4 +22,3 @@ func popup():
 		animation_player.play("popup")  # Play the skill animation
 		print( "popup skill ", pai)
 		
-	
