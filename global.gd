@@ -15,7 +15,6 @@ func _ready():
 # Adds currency (gold) and updates the UI
 func add_currency(amount: int):
 	currency += amount
-	print("Currency: ", currency)
 	_update_balance_ui()
 
 # Function to update the balance label in the UI

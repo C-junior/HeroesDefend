@@ -8,8 +8,7 @@ enum SlotType { WEAPON, ARMOR, ACCESSORY, ALL }
 
 # Set the type of the slot (exported to set from the editor)
 @export var slot_type: SlotType = SlotType.ALL
-@onready var tooltip = $Tooltip  # Add a tooltip to show who can equip the item
-@onready var invalid_label = $InvalidLabel  # Add a label to show when the item is invalid for the character
+
 
 #@onready var manager = get_parent().get_parent().get_parent()
 @onready var manager = global
@@ -31,7 +30,7 @@ var active_character: BaseCharacter = null
 # Initialize the slot
 func _ready():
 	# Listen for character switching from the UI
-	get_node("/root/MainGame/UI").connect("character_switched", Callable(self, "_on_character_switched"))
+	UI.connect("character_switched", Callable(self, "_on_character_switched"))
 	
 
 # Handle when the character is switched
@@ -99,10 +98,7 @@ func _drop_data(_at_position, data):
 	item = data.item
 	data.item = temp
 
-func _show_invalid_effect():
-	modulate = Color(1, 0, 0)  # Red modulate color
-	invalid_label.visible = true  # Show a label that indicates the item won't work
-	invalid_label.text = "Item not effective for this character!"
+
 # Check if the item type fits the active character's allowed types
 func _item_fits_slot(item: Item) -> bool:
 	# Ensure the item type matches the slot type (weapon, armor, accessory)

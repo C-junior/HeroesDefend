@@ -8,6 +8,13 @@ class_name BaseCharacter
 @onready var health_progress_bar = $HealthProgressBAr
 @onready var popuploc = $PopupLocation
 @onready var level_label: Label = $LevelLabel
+#@onready var skill_name_location: Marker2D = $SkillNameLocation
+
+
+#skills var
+var shield_block_count: int = 0  # Tracks how many attacks can be blocked
+var is_stunned: bool = false  # Track stun state
+@export var stun_timer: Timer = Timer.new()
 
 
 # Stats and growths
@@ -33,12 +40,18 @@ class_name BaseCharacter
 # Equipment dictionary
 var equipped_items: Dictionary = {"weapon": null, "armor": null, "accessory": null}
 
+# Character skill management
+var active_skills = []  # Stores the active skills with cooldowns
+#var skill_cooldowns = {}  # Tracks cooldowns of active skills
+var learned_skills: Array = []
+
 var current_health: int
 @export var attack_timer: Timer = Timer.new()
 var target: Node2D  # Current attack target
 
 # Reference to the level system
-@onready var level_system = LevelSystem.new()
+signal level_up_skill_popup
+@onready var level_system = LevelSystem.new()  # Assuming your LevelSystem handles leveling
 
 func _ready():
 	current_health = max_health
@@ -52,7 +65,11 @@ func _ready():
 	update_stats()
 	level_system.connect("leveled_up", Callable(self, "_on_leveled_up"))
 	update_level_ui()
-	
+
+	# Initialize stun timer
+	stun_timer.one_shot = true
+	stun_timer.connect("timeout", Callable(self, "_on_stun_end"))
+	add_child(stun_timer)
 
 # Determines if an item can be equipped
 func can_equip(item: Item) -> bool:
@@ -62,7 +79,7 @@ func can_equip(item: Item) -> bool:
 func equip_item(item: Item):
 	if can_equip(item):
 		equipped_items[item.type] = item
-		print("Equipped: ", item.name, " to slot: ", item.type)
+		#print("Equipped: ", item.name, " to slot: ", item.type)
 	else:
 		print("Cannot equip: ", item.name, " due to character type restrictions.")
 	update_stats()
@@ -92,6 +109,19 @@ func update_stats():
 			move_speed += item.speed_bonus
 			if slot == "armor":
 				max_health += item.health_bonus
+	for skill in learned_skills:
+		print("Checking skill: ", skill.name, "learn skills ", learned_skills)
+		
+		if skill != null:
+			if skill.name == "Weapon Mastery":
+				attack_damage += skill.attack_bonus
+				print("Applied weapon mastery bonus: ", skill.attack_bonus)
+			elif skill.name == "Defense Mastery":
+				defense += skill.defense_bonus
+				print("Applied defense mastery bonus: ", skill.defense_bonus)
+			elif skill.name == "Crescendo":
+				max_health += skill.health_bonus
+				print("Applied defense mastery bonus: ", skill.health_bonus)
 
 	current_health = min(current_health, max_health)
 	update_health_label()
@@ -107,16 +137,31 @@ func attack(target: Node2D):
 		attack_timer.start()
 
 # Handle taking damage
+# Activate the shield with a set number of blocks
+func activate_shield(blocks: int):
+	shield_block_count = blocks
+	print("Shield activated with", blocks, "blocks.")
+
+# Override the take_damage method to reduce block count if shield is active
 func take_damage(damage: int):
-	var reduced_damage = max(damage - defense, 0)
-	current_health -= reduced_damage
-	popuploc.popup(-reduced_damage)  # Damage popup
-	update_health_label()
-	health_progress_bar.value = current_health
-	if current_health <= 0:
-		die()
+	if shield_block_count > 0:
+		shield_block_count -= 1
+		print("Blocked attack! Remaining blocks:", shield_block_count)
+		if shield_block_count == 0:
+			print("Shield has been broken!")
+	else:
+		var reduced_damage = max(damage - defense, 0)
+		current_health -= reduced_damage
+		popuploc.popup(-reduced_damage)  # Display damage popup
+		update_health_label()
+		health_progress_bar.value = current_health
+		if current_health <= 0:
+			die()
 
 func move_and_attack(target: Node2D, delta: float):
+	if is_stunned:
+		velocity = Vector2.ZERO
+		return  # Skip movement and attack while stunned
 	var direction = (target.global_position - global_position).normalized()
 	if global_position.distance_to(target.global_position) > attack_range:
 		velocity = direction * move_speed
@@ -162,12 +207,14 @@ func receive_heal(heal: int):
 
 # Handle level-up and stat growth
 func _on_leveled_up():
-	max_health += health_growth
+	max_health += health_growth 
 	attack_damage += damage_growth
 	defense += defense_growth
 	current_health = max_health
 	update_stats()
 	update_level_ui()
+
+
 
 # Update the level label UI
 func update_level_ui():
@@ -177,10 +224,49 @@ func update_level_ui():
 func add_xp_to_party(amount: int):
 	for player in get_tree().get_nodes_in_group("PlayerCharacters"):
 		player.level_system.add_xp(amount)
-		print(player.name + " earned XP: ", amount)
+		
 		_on_leveled_up()
 
 # Add global gold when enemy dies
 func add_gold(gold: int):
 	global.add_currency(gold)  # Update global currency
-	print("Gold added: ", gold)
+	
+
+# Method to learn a new skill
+func learn_skill(skill: Skill):
+	print("Learning skill: ", skill.name)
+	if skill.is_passive:
+		# Apply the passive effect immediately
+		skill.apply_passive_effect(self)
+	else:
+		# Add active skills to the active skills list
+		active_skills.append(skill)
+
+	print("Skill learned: ", skill.name)
+# Process movement and attack if not stunned
+
+# Stun the character for a duration
+func stun(duration: float) -> void:
+	if is_stunned:
+		return  # Ignore if already stunned
+	is_stunned = true
+	print("Character stunned for", duration, "seconds.")
+	velocity = Vector2.ZERO  # Stop movement
+	stun_timer.start()  # Start the stun timer
+	stun_timer.wait_time = duration
+
+func stunned():
+	if is_stunned == true:
+		target.sprite.modulate = Color(1,0,0)
+		print("stuned ", target)
+# Called when stun duration ends
+func _on_stun_end() -> void:
+	is_stunned = false
+	print("Stun ended.")
+
+	target.sprite.modulate = Color(1,1,1)
+
+#func _process(delta: float):
+	#if not is_stunned:
+		#move_and_attack(target, delta)  # Movement logic
+		#

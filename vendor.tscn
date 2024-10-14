@@ -4,19 +4,19 @@
 [ext_resource type="Script" path="res://vendor.gd" id="2_jq22k"]
 [ext_resource type="PackedScene" uid="uid://dop2febsr8sp7" path="res://interaction.tscn" id="3_yfg02"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_68jko"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_vmgds"]
 atlas = ExtResource("1_7bwui")
 region = Rect2(0, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_rohys"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_m80rc"]
 atlas = ExtResource("1_7bwui")
 region = Rect2(32, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_jqg5o"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_bixgv"]
 atlas = ExtResource("1_7bwui")
 region = Rect2(64, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vwcge"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_8a7ke"]
 atlas = ExtResource("1_7bwui")
 region = Rect2(96, 0, 32, 32)
 
@@ -24,16 +24,16 @@ region = Rect2(96, 0, 32, 32)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_68jko")
+"texture": SubResource("AtlasTexture_vmgds")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_rohys")
+"texture": SubResource("AtlasTexture_m80rc")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_jqg5o")
+"texture": SubResource("AtlasTexture_bixgv")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vwcge")
+"texture": SubResource("AtlasTexture_8a7ke")
 }],
 "loop": true,
 "name": &"default",
@@ -43,6 +43,7 @@ animations = [{
 [node name="Vendor" type="AnimatedSprite2D"]
 sprite_frames = SubResource("SpriteFrames_udhv6")
 autoplay = "default"
+frame_progress = 0.0924173
 script = ExtResource("2_jq22k")
 
 [node name="Interaction" parent="." instance=ExtResource("3_yfg02")]
