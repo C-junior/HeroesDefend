@@ -85,5 +85,5 @@ func _process(delta: float):
 	# Check if the wave is completed in each frame
 	check_wave_completion()
 	# Update the UI with knight stats
-	knight_atk.text = str(knight.attack_damage)
-	knight_def.text = str(knight.knight_defense)
+	#knight_atk.text = str(knight.attack_damage)
+	#knight_def.text = str(knight.knight_defense)

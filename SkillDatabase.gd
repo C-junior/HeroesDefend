@@ -26,31 +26,35 @@ func _ready():
 	}
 	# Skills for the Cleric
 	skills[Constants.CharacterType.HEALER] = {
-		3: [
-			#_create_active_skill("Healing Light", "Heal allies by 20% max health.", "heal", 20, 0, "res://Assets/Icons/icon7.png"),
-			#_create_active_skill("Divine Shield", "Boost defense by 50% for 5 sec (15 sec cooldown).", "cooldown_ability", 50, 5, "res://Assets/Icons/icon8.png"),
-			#_create_active_skill("Holy Smite", "Deal 100% attack_damage to a single enemy.", "attack_damage", 100, 0, "res://Assets/Icons/icon9.png")
-		],
-		6: [
-			#_create_active_skill("Blessing", "Increase defense by 15 for 10 sec.", "cooldown_ability", 15, 10, "res://Assets/Icons/icon10.png"),
-			#_create_active_skill("Radiant Burst", "Deal AoE damage for 50% attack_damage to nearby enemies (10 sec cooldown).", "cooldown_ability", 50, 10, "res://Assets/Icons/icon11.png"),
-			#_create_active_skill("Prayer of Healing", "Heal all allies by 20% max health (20 sec cooldown).", "cooldown_ability", 20, 20, "res://Assets/Icons/icon12.png")
+	6: [
+		_create_holy_hands(),
+		_create_healing_light(),
+		_create_healing_mastery()
+	],
+	2: [
+		_create_radiant_aura(),
+		_create_mass_heal(),
+		_create_divine_shield()
+	],
+	4: [
+		_create_defense_mastery(),
+		_create_crescendo(),
+		_create_purifying_wave()
+	]
+}
+	# Skills for the Valkyrie
+	skills[Constants.CharacterType.VALKYRIE] = {
+	2: [
+		_create_spear_throw(),
+		_create_divine_reprisal(),
+		_create_thunder_strike()
+	],
+	4:[
+			_create_thunder_strike(),
+			_create_fenrirs_wrath(),
+			_create_ragnarok()
 		]
 	}
-
-	# Skills for the Valkyrie
-	#skills[Constants.CharacterType.VALKYRIE] = {
-		#3: [
-			#_create_active_skill("Spear Thrust", "Deal 80% attack_damage to enemies in front.", "attack_damage", 80, 0, "res://Assets/Icons/icon13.png"),
-			#_create_active_skill("Winged Strike", "Boost move speed by 20% for 5 sec.", "cooldown_ability", 20, 5, "res://Assets/Icons/icon14.png"),
-			#_create_active_skill("Valor Aura", "Increase defense of all allies by 20% for 5 sec.", "cooldown_ability", 20, 5, "res://Assets/Icons/icon15.png")
-		#],
-		#6: [
-			#_create_active_skill("Guardian's Shield", "Absorb damage equal to 20% of max health (15 sec cooldown).", "cooldown_ability", 20, 15, "res://Assets/Icons/icon16.png"),
-			#_create_active_skill("Righteous Fury", "Increase attack speed by 25% for 8 seconds (12 sec cooldown).", "cooldown_ability", 25, 8, "res://Assets/Icons/icon17.png"),
-			#_create_active_skill("Avenger's Wrath", "Deal 120% attack_damage to all nearby enemies (20 sec cooldown).", "cooldown_ability", 120, 20, "res://Assets/Icons/icon18.png")
-		#]
-	#}
 
 # Create Vorpal Slash skill
 # Example Skill Creation Functions
@@ -123,6 +127,113 @@ func _create_taunt() -> Skill:
 	taunt.cooldown = 8
 	taunt.icon = load("res://Assets/Icons/icon_taunt.png")
 	return taunt
+	
+# skills cleric
+func _create_holy_hands() -> Skill:
+	var holy_hands = load("res://Skills/holy_hands.gd").new()
+	holy_hands.name = "Holy Hands"
+	holy_hands.description = "Give extra damage to 1 ally for their next 3 attacks."
+	holy_hands.cooldown = 12  # Example cooldown
+	holy_hands.icon = load("res://Assets/Icons/icon_holy_hands.png")
+	return holy_hands
+
+func _create_healing_light() -> Skill:
+	var healing_light = load("res://Skills/healing_light.gd").new()
+	healing_light.name = "Healing Light"
+	healing_light.description = "Heal 1 ally for 20% of max health."
+	healing_light.cooldown = 10
+	healing_light.icon = load("res://Assets/Icons/icon_healing_light.png")
+	return healing_light
+
+func _create_healing_mastery() -> Skill:
+	var healing_mastery = load("res://Skills/healing_mastery.gd").new()
+	healing_mastery.name = "Healing Mastery"
+	healing_mastery.description = "Increase the cleric's base healing amount by 20."
+	
+	healing_mastery.icon = load("res://Assets/Icons/icon_healing_mastery.png")
+	return healing_mastery
+
+func _create_mass_heal() -> Skill:
+	var mass_heal = load("res://Skills/mass_heal.gd").new()
+	mass_heal.name = "Mass Heal"
+	mass_heal.description = "Heal all allies for 20% of their max health."
+	mass_heal.cooldown = 30  # Example cooldown
+	mass_heal.icon = load("res://Assets/Icons/icon_mass_heal.png")
+	return mass_heal
+
+# Create the Purifying Wave skill
+func _create_purifying_wave() -> Skill:
+	var purifying_wave = load("res://Skills/purifying_wave.gd").new()  # Load the script directly
+	purifying_wave.name = "Purifying Wave"
+	purifying_wave.description = "Heal all allies by 15% of max health and remove debuffs like poison and slow."
+	purifying_wave.cooldown = 5  # 15 seconds cooldown
+	purifying_wave.icon = load("res://Assets/Icons/icon_purifying_wave.png")
+	return purifying_wave
+
+func _create_radiant_aura() -> Skill:
+	var radiant_aura = load("res://Skills/radiant_aura.gd").new()
+	radiant_aura.name = "Radiant Aura"
+	radiant_aura.description = "Regen HP of all allies for 5 seconds."
+	radiant_aura.cooldown = 15  # Example cooldown
+	radiant_aura.icon = load("res://Assets/Icons/icon_radiant_aura.png")
+	return radiant_aura
+
+func _create_divine_shield() -> Skill:
+	var divine_shield = load("res://Skills/divine_shield.gd").new()
+	divine_shield.name = "Divine Shield"
+	divine_shield.description = "Make the ally with the lowest HP immune to damage for 3 seconds."
+	divine_shield.cooldown = 10  # Example cooldown
+	divine_shield.icon = load("res://Assets/Icons/icon_divine_shield.png")
+	return divine_shield
+	
+	#valkyrie skills
+func _create_spear_throw() -> Skill:
+	var spear_throw = load("res://Skills/Valkyrie/spear_throw.gd").new()
+	spear_throw.name = "Spear Throw"
+	spear_throw.description = "Throw a spear at the farthest enemy."
+	spear_throw.cooldown = 3
+	spear_throw.icon = load("res://Assets/Icons/icon_spear_throw.png")
+	return spear_throw
+
+func _create_divine_reprisal() -> Skill:
+	var reprisal = load("res://Skills/Valkyrie/divine_reprisal.gd").new()
+	reprisal.name = "Divine Reprisal"
+	reprisal.description = "Reflect 20% of damage taken back to the attacker."
+	reprisal.cooldown = 0  # Passive skill
+	reprisal.icon = load("res://Assets/Icons/icon_divine_reprisal.png")
+	return reprisal
+
+func _create_thunder_strike() -> Skill:
+	var thunder_strike = load("res://Skills/Valkyrie/thunder_strike.gd").new()
+	thunder_strike.name = "Thunder Strike"
+	thunder_strike.description = "Deal lightning damage to a random enemy."
+	thunder_strike.cooldown = 8
+	thunder_strike.icon = load("res://Assets/Icons/icon_thunder_strike.png")
+	return thunder_strike
+
+func _create_valkyries_zeal() -> Skill:
+	var zeal = load("res://Skills/Valkyrie/valkyries_zeal.gd").new()
+	zeal.name = "Valkyrie's Zeal"
+	zeal.description = "Increase attack speed by 20% for 5 seconds."
+	zeal.cooldown = 15
+	zeal.icon = load("res://Assets/Icons/icon_valkyries_zeal.png")
+	return zeal
+func _create_ragnarok() -> Skill:
+	var ragnarok = load("res://Skills/Valkyrie/ragnarok.gd").new()
+	ragnarok.name = "Ragnarök"
+	ragnarok.description = "Deal massive damage to all enemies on the battlefield."
+	ragnarok.cooldown = 20
+	ragnarok.icon = load("res://Assets/Icons/icon_ragnarok.png")
+	return ragnarok
+func _create_fenrirs_wrath() -> Skill:
+	var fenrirs_wrath = load("res://Skills/Valkyrie/fenrir_wrath.gd").new()
+	fenrirs_wrath.name = "Fenrir's Wrath"
+	fenrirs_wrath.description = "Each attack has a 25% chance to deal 120% attack damage."
+	fenrirs_wrath.cooldown = 0  # Passive
+	fenrirs_wrath.icon = load("res://Assets/Icons/icon_fenrirs_wrath.png")
+	return fenrirs_wrath
+
+
 
 # Fetch skills based on character type and level
 func get_skills_for_level(character_type: int, level: int) -> Array:

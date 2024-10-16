@@ -33,7 +33,7 @@ func _ready():
 	base_defense = knight_defense
 
 	base_move_speed = knight_move_speed
-	current_health = max_health
+	current_health = base_max_health
 	current_item = null  # Start without any item equipped
 	
 	character_type = constants.CharacterType.FIGHTER  # Knights are Fighters
@@ -56,7 +56,7 @@ func _ready():
 func learn_skill(skill: Skill):
 	learned_skills.append(skill)
 	_setup_skill_cooldown(skill)
-	print("Learned skill:", skill.name)
+	print("Knight learned skill: ", skill.name)
 	skill.init(self)  # Call init to initialize the skill properly (ensure cooldown_timer is initialized)
 	print("all skills are ", learned_skills[0].name)
 	# Initialize skill within the character context (call init)

@@ -2,7 +2,7 @@
 extends BaseCharacter
 
 @export var enemy_name: String = "Goblin"
-@export var enemy_attack_damage: int = 28
+@export var enemy_attack_damage: int = 32
 @export var enemy_move_speed: int = 40
 @export var goblin_max_health: int = 1000
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D

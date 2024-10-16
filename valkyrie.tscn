@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://b1qje0vy6urla"]
+[gd_scene load_steps=20 format=3 uid="uid://dtw80xikug5sq"]
 
 [ext_resource type="PackedScene" uid="uid://dnaol20pgmvt8" path="res://base_character.tscn" id="1_jwpo7"]
 [ext_resource type="Script" path="res://valkyrie.gd" id="2_ifn4l"]
@@ -120,7 +120,7 @@ animations = [{
 [node name="Valkyrie" groups=["PlayerCharacters"] instance=ExtResource("1_jwpo7")]
 script = ExtResource("2_ifn4l")
 valkyrie_attack_damage = 70
-valkyrie_defense = 12
+valkyrie_defense = 8
 valkyrie_move_speed = 85
 valkyrie_max_health = 350
 valkyrie_attack_cooldown = 1.2

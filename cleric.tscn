@@ -60,6 +60,7 @@ position = Vector2(146, 79)
 script = ExtResource("2_yrgk8")
 heal_amount = 40
 heal_cooldown = 2.0
+cleric_max_health = 1000
 attack_range = 150.0
 
 [node name="ClericSprite" type="AnimatedSprite2D" parent="." index="0"]

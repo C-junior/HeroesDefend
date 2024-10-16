@@ -110,7 +110,7 @@ func update_stats():
 			if slot == "armor":
 				max_health += item.health_bonus
 	for skill in learned_skills:
-		print("Checking skill: ", skill.name, "learn skills ", learned_skills)
+		#print("Checking skill: ", skill.name, "learn skills ", learned_skills)
 		
 		if skill != null:
 			if skill.name == "Weapon Mastery":
@@ -144,6 +144,10 @@ func activate_shield(blocks: int):
 
 # Override the take_damage method to reduce block count if shield is active
 func take_damage(damage: int):
+	if is_invincible:
+		self.sprite.modulate = Color(1,1,0)
+		print(name, "is invincible and took no damage!")
+		return  # Ignore damage if invincible
 	if shield_block_count > 0:
 		shield_block_count -= 1
 		print("Blocked attack! Remaining blocks:", shield_block_count)
@@ -265,6 +269,35 @@ func _on_stun_end() -> void:
 	print("Stun ended.")
 
 	target.sprite.modulate = Color(1,1,1)
+	
+# invincible
+
+var is_invincible: bool = false  # Track if the character is invincible
+var invincibility_timer: Timer = null
+
+# Function to toggle invincibility for a specific duration
+func set_invincible(duration: float) -> void:
+	is_invincible = true	
+	print(name, "is now invincible for", duration, "seconds.")
+	
+	# Start the invincibility timer if not already set
+	if not invincibility_timer:
+		invincibility_timer = Timer.new()
+		invincibility_timer.one_shot = true
+		add_child(invincibility_timer)
+	
+	invincibility_timer.wait_time = duration
+	invincibility_timer.start()
+	invincibility_timer.connect("timeout", Callable(self, "_end_invincibility"))
+
+# End invincibility after the timer expires
+func _end_invincibility() -> void:
+	is_invincible = false
+	self.sprite.modulate = Color(1,1,1)
+	print(name, "is no longer invincible.")
+	
+# Check if the character is dead
+
 
 #func _process(delta: float):
 	#if not is_stunned:

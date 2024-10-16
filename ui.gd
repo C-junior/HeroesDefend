@@ -1,3 +1,4 @@
+# ui.gd
 extends CanvasLayer
 
 @onready var inventory: Inventory = %Inventory   # Shared inventory to display the active character's items
@@ -7,7 +8,6 @@ extends CanvasLayer
 @onready var valkyrie_button: Button = %valkyrie_button
 @onready var inventory_switch: Panel = $Inventory_switch
 @onready var ativechar: Button = $Inventory_switch/ativechar
-
 # Skill Panel
 @onready var knight_buttons = $SkillPanel/SkillPopupKnight  # HBox for Knight skills
 @onready var cleric_buttons = $SkillPanel/SkillPopupCleric  # HBox for Cleric skills
@@ -24,7 +24,6 @@ extends CanvasLayer
 var skills_selected_knight = false
 var skills_selected_cleric = false
 var skills_selected_valkyrie = false
-
 
 # Signal to notify which character is selected
 signal character_switched(character: BaseCharacter)
@@ -114,39 +113,49 @@ func _show_skill_selection():
 	skills_selected_cleric = false
 	skills_selected_valkyrie = false
 
-	# Load skills for each character from SkillDatabase
-	_setup_skill_buttons(knight_buttons, SkillDB.get_skills_for_level(knight.character_type, wave_manager.current_wave))
-	_setup_skill_buttons(cleric_buttons, SkillDB.get_skills_for_level(cleric.character_type, wave_manager.current_wave))
-	_setup_skill_buttons(valkyrie_buttons, SkillDB.get_skills_for_level(valkyrie.character_type, wave_manager.current_wave))
+ # Load skills for each character from SkillDatabase
+	_setup_skill_buttons(knight_buttons, SkillDB.get_skills_for_level(knight.character_type, wave_manager.current_wave), "knight")
+	_setup_skill_buttons(cleric_buttons, SkillDB.get_skills_for_level(cleric.character_type, wave_manager.current_wave), "cleric")
+	_setup_skill_buttons(valkyrie_buttons, SkillDB.get_skills_for_level(valkyrie.character_type, wave_manager.current_wave), "valkyrie")
 
 	print("_show_skill_selection ", valkyrie.character_type, wave_manager.current_wave)
-# Setup skill buttons with icons and descriptions
-func _setup_skill_buttons(buttons_container: HBoxContainer, skills: Array):
+
+
+# Setup skill buttons with icons and descriptions for specific characters
+func _setup_skill_buttons(buttons_container: HBoxContainer, skills: Array, character_type: String):
+		# Disconnect previous signals before assigning new ones
+	for button in buttons_container.get_children():
+		button.disconnect("pressed", Callable(self, "_on_skill_selected"))
+	
+	# Set up new skills
 	for i in range(min(buttons_container.get_child_count(), skills.size())):
-		print("_setup_skill_buttons ",skills)
 		var button = buttons_container.get_child(i)
 		var skill = skills[i]
 		button.text = skill.name
 		button.icon = skill.icon  # Assuming the icon is preloaded in the Skill object
-		button.connect("pressed", Callable(self, "_on_skill_selected").bind(buttons_container, skill))  # Pass the Skill object
+		# Bind the character type (knight, cleric, valkyrie) and skill to the callback function
+		button.connect("pressed", Callable(self, "_on_skill_selected").bind(buttons_container, skill, character_type))
+
 
 # When a skill is selected for any character
-func _on_skill_selected(buttons_container: HBoxContainer, skill: Skill):
-	active_character.learn_skill(skill)  # Apply the skill to the active character
-	#active_character.trigger_cooldown_skill(skill)  # Start the cooldown for the skill
-	print("Skill learned and cooldown started: ", skill.name)
+func _on_skill_selected(buttons_container: HBoxContainer, skill: Skill, character_type: String):
+	# Apply the skill to the specific character based on the character_type
+	if character_type == "knight":
+		knight.learn_skill(skill)
+		skills_selected_knight = true
+		print("Knight learned skill:", skill.name)
+	elif character_type == "cleric":
+		cleric.learn_skill(skill)
+		skills_selected_cleric = true
+		print("Cleric learned skill:", skill.name)
+	elif character_type == "valkyrie":
+		valkyrie.learn_skill(skill)
+		skills_selected_valkyrie = true
+		print("Valkyrie learned skill:", skill.name)
 
 	_disable_skill_buttons(buttons_container)
-	
-	# Mark the character's skill as selected
-	if active_character == knight:
-		skills_selected_knight = true
-	elif active_character == cleric:
-		skills_selected_cleric = true
-	elif active_character == valkyrie:
-		skills_selected_valkyrie = true
+	_check_all_skills_selected()
 
-	_check_all_skills_selected()  # Check if all skills have been selected
 
 # Enable skill buttons
 func _enable_skill_buttons(buttons_container: HBoxContainer):
@@ -160,43 +169,24 @@ func _disable_skill_buttons(buttons_container: HBoxContainer):
 
 # Check if all characters have selected their skills
 func _check_all_skills_selected():
-	confirm_button.visible = true  # Show the confirm button
-	
+	if skills_selected_knight or skills_selected_cleric or skills_selected_valkyrie:
+		confirm_button.visible = true  # Show the confirm button
+
 # Confirm skill selections and resume the game
 func _on_confirm_skills():
 	get_tree().paused = false  # Unpause the game
 	skill_panel.visible = false  # Hide the skill panel
+	_reset_skill_buttons()
+	print("Skills confirmed. Resuming game.")
+
+# Reset the skill buttons for the next selection
+func _reset_skill_buttons():
 	for button in cleric_buttons.get_children():
 		button.disabled = false
 	for button in knight_buttons.get_children():
 		button.disabled = false
 	for button in valkyrie_buttons.get_children():
 		button.disabled = false
-	
-	print("Skills confirmed. Resuming game.")
-	
-
-# Knight skill selected
-func _on_knight_skill_selected(skill_name: String):
-	knight.learn_skill(skill_name)
-	skills_selected_knight = true
-	_disable_skill_buttons(knight_buttons)
-	_check_all_skills_selected()
-
-# Cleric skill selected
-func _on_cleric_skill_selected(skill_name: String):
-	cleric.learn_skill(skill_name)
-	skills_selected_cleric = true
-	_disable_skill_buttons(cleric_buttons)
-	_check_all_skills_selected()
-
-# Valkyrie skill selected
-func _on_valkyrie_skill_selected(skill_name: String):
-	valkyrie.learn_skill(skill_name)
-	skills_selected_valkyrie = true
-	_disable_skill_buttons(valkyrie_buttons)
-	_check_all_skills_selected()
-
 
 func _on_confirm_button_pressed() -> void:
 	_on_confirm_skills()

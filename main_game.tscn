@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dlplcfdehgpxh" path="res://Assets/arena_bg.jpg" id="1_5dba5"]
 [ext_resource type="PackedScene" uid="uid://djgsammf8qp81" path="res://knight.tscn" id="2_nqt4s"]
 [ext_resource type="PackedScene" uid="uid://chgkv5dsnjvcr" path="res://cleric.tscn" id="3_jng1e"]
-[ext_resource type="PackedScene" uid="uid://b1qje0vy6urla" path="res://valkyrie.tscn" id="5_4l462"]
+[ext_resource type="PackedScene" uid="uid://dtw80xikug5sq" path="res://valkyrie.tscn" id="5_4l462"]
 [ext_resource type="PackedScene" uid="uid://dwusg6yb1iy13" path="res://vendor.tscn" id="11_w0ngy"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_n6nty"]
@@ -22,7 +22,6 @@ texture = ExtResource("1_5dba5")
 
 [node name="Knight" parent="PlayerCharacters" instance=ExtResource("2_nqt4s")]
 position = Vector2(285, 266)
-knight_defense = 1
 
 [node name="Cleric" parent="PlayerCharacters" instance=ExtResource("3_jng1e")]
 position = Vector2(199, 308)

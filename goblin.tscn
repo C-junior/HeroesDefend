@@ -57,7 +57,7 @@ animations = [{
 [node name="Goblin" groups=["Enemies"] instance=ExtResource("1_w23yf")]
 script = ExtResource("2_y8wxr")
 enemy_name = "Goblin"
-enemy_attack_damage = 28
+enemy_attack_damage = 32
 enemy_move_speed = 40
 goblin_max_health = 1000
 xp_reward = 100
