@@ -28,7 +28,7 @@ func _ready():
 	current_health = base_max_health
 	current_item = null  # Start without any item equipped
 	character_type = constants.CharacterType.VALKYRIE
-	health_progress_bar.max_value = max_health  # Set max value for the progress bar
+	health_progress_bar.max_value = base_max_health  # Set max value for the progress bar
 	health_progress_bar.value = current_health  # Initialize progress bar value
 
 	attack_timer.wait_time = valkyrie_attack_cooldown  # Attack timer setup

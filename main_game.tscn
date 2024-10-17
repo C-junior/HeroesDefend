@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://kuka26t1av42"]
+[gd_scene load_steps=9 format=3 uid="uid://kuka26t1av42"]
 
 [ext_resource type="Script" path="res://main_game.gd" id="1_1xiyh"]
 [ext_resource type="Texture2D" uid="uid://dlplcfdehgpxh" path="res://Assets/arena_bg.jpg" id="1_5dba5"]
 [ext_resource type="PackedScene" uid="uid://djgsammf8qp81" path="res://knight.tscn" id="2_nqt4s"]
 [ext_resource type="PackedScene" uid="uid://chgkv5dsnjvcr" path="res://cleric.tscn" id="3_jng1e"]
 [ext_resource type="PackedScene" uid="uid://dtw80xikug5sq" path="res://valkyrie.tscn" id="5_4l462"]
+[ext_resource type="PackedScene" uid="uid://brt66rrbwnw6e" path="res://wizard.tscn" id="6_y5edn"]
 [ext_resource type="PackedScene" uid="uid://dwusg6yb1iy13" path="res://vendor.tscn" id="11_w0ngy"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_n6nty"]
@@ -21,13 +22,18 @@ texture = ExtResource("1_5dba5")
 [node name="PlayerCharacters" type="Node2D" parent="."]
 
 [node name="Knight" parent="PlayerCharacters" instance=ExtResource("2_nqt4s")]
-position = Vector2(285, 266)
+position = Vector2(316, 200)
 
 [node name="Cleric" parent="PlayerCharacters" instance=ExtResource("3_jng1e")]
 position = Vector2(199, 308)
 
 [node name="Valkyrie" parent="PlayerCharacters" instance=ExtResource("5_4l462")]
-position = Vector2(320, 337)
+position = Vector2(335, 368)
+
+[node name="Wizard" parent="PlayerCharacters" instance=ExtResource("6_y5edn")]
+position = Vector2(189, 409)
+wizard_attack_damage = 62
+wizard_attack_cooldown = 2.0
 
 [node name="Enemies" type="Node2D" parent="."]
 

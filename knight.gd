@@ -38,7 +38,7 @@ func _ready():
 	
 	character_type = constants.CharacterType.FIGHTER  # Knights are Fighters
  
-	health_progress_bar.max_value = max_health  # Set max value for the progress bar
+	health_progress_bar.max_value = base_max_health  # Set max value for the progress bar
 	health_progress_bar.value = current_health  # Initialize progress bar value
 
 	attack_timer.wait_time = knight_attack_cooldown  # Ensure attack_timer is initialized in BaseCharacter

@@ -46,16 +46,23 @@ func _ready():
 	skills[Constants.CharacterType.VALKYRIE] = {
 	2: [
 		_create_spear_throw(),
-		_create_divine_reprisal(),
+		_create_valhallas_call(),  # Adding Valhalla's Call
 		_create_thunder_strike()
 	],
 	4:[
-			_create_thunder_strike(),
-			_create_fenrirs_wrath(),
-			_create_ragnarok()
+		_create_thunder_strike(),
+		_create_fenrirs_wrath(),
+		_create_ragnarok()
 		]
 	}
-
+	# Skills for the Wizard
+	skills[Constants.CharacterType.MAGE] = {
+		2: [
+			_create_fireball(),
+			_create_ice_nova(),
+			_create_defense_mastery()
+		],
+		}
 # Create Vorpal Slash skill
 # Example Skill Creation Functions
 
@@ -195,13 +202,15 @@ func _create_spear_throw() -> Skill:
 	spear_throw.icon = load("res://Assets/Icons/icon_spear_throw.png")
 	return spear_throw
 
-func _create_divine_reprisal() -> Skill:
-	var reprisal = load("res://Skills/Valkyrie/divine_reprisal.gd").new()
-	reprisal.name = "Divine Reprisal"
-	reprisal.description = "Reflect 20% of damage taken back to the attacker."
-	reprisal.cooldown = 0  # Passive skill
-	reprisal.icon = load("res://Assets/Icons/icon_divine_reprisal.png")
-	return reprisal
+# Add this in your SkillDatabase.gd
+func _create_valhallas_call() -> Skill:
+	var valhallas_call = load("res://Skills/Valkyrie/valhallas_call.gd").new()
+	valhallas_call.name = "Valhalla's Call"
+	valhallas_call.description = "Reduces attack cooldown, increases movement speed, and grants lifesteal when health drops below 20%."
+	valhallas_call.cooldown = 30  # 30 seconds cooldown
+	valhallas_call.icon = load("res://Assets/Icons/icon_valhallas_call.png")  # Add the appropriate icon
+	return valhallas_call
+
 
 func _create_thunder_strike() -> Skill:
 	var thunder_strike = load("res://Skills/Valkyrie/thunder_strike.gd").new()
@@ -232,6 +241,24 @@ func _create_fenrirs_wrath() -> Skill:
 	fenrirs_wrath.cooldown = 0  # Passive
 	fenrirs_wrath.icon = load("res://Assets/Icons/icon_fenrirs_wrath.png")
 	return fenrirs_wrath
+
+#mage skills
+# Helper functions to create the skills
+func _create_fireball() -> Skill:
+	var fireball = load("res://Skills/Wizard/fireball.gd").new()
+	fireball.name = "Fireball"
+	fireball.description = "Deal 80 damage to the nearest enemy."
+	fireball.cooldown = 5
+	fireball.icon = load("res://Assets/Icons/icon_fireball.png")
+	return fireball
+
+func _create_ice_nova() -> Skill:
+	var ice_nova = load("res://Skills/Wizard/ice_nova.gd").new()
+	ice_nova.name = "Ice Nova"
+	ice_nova.description = "Deal 50 damage and slow enemies in an area."
+	ice_nova.cooldown = 8
+	ice_nova.icon = load("res://Assets/Icons/icon_ice_nova.png")
+	return ice_nova
 
 
 

@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://bbfwbrjwui2dd"]
+
+[ext_resource type="Script" path="res://magic_bolt.gd" id="1_258mv"]
+[ext_resource type="Texture2D" uid="uid://cwvaexr5r2n20" path="res://Assets/magic_bolt.png" id="1_dpb1d"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y33i6"]
+atlas = ExtResource("1_dpb1d")
+region = Rect2(0, 0, 109, 105)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_iqgnv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y33i6")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_e6n2h"]
+radius = 26.0192
+
+[node name="MagicBolt" type="Area2D"]
+script = ExtResource("1_258mv")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_iqgnv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_e6n2h")

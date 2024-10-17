@@ -130,6 +130,14 @@ offset_right = 196.0
 offset_bottom = 166.0
 text = "Valkyrie Inventory"
 
+[node name="wizard_button" type="Button" parent="."]
+unique_name_in_owner = true
+offset_left = 52.0
+offset_top = 249.0
+offset_right = 201.0
+offset_bottom = 280.0
+text = "Wizard Inventory"
+
 [node name="cleric_button" type="Button" parent="."]
 unique_name_in_owner = true
 offset_left = 54.0
@@ -175,10 +183,10 @@ offset_bottom = 426.0
 
 [node name="SkillPopupKnight" type="HBoxContainer" parent="SkillPanel"]
 layout_mode = 0
-offset_left = 159.0
-offset_top = 100.0
-offset_right = 199.0
-offset_bottom = 140.0
+offset_left = 171.0
+offset_top = 69.0
+offset_right = 211.0
+offset_bottom = 109.0
 
 [node name="KnightButton1" type="Button" parent="SkillPanel/SkillPopupKnight"]
 layout_mode = 2
@@ -194,10 +202,10 @@ size_flags_horizontal = 0
 
 [node name="SkillPopupCleric" type="HBoxContainer" parent="SkillPanel"]
 layout_mode = 0
-offset_left = 160.0
-offset_top = 178.0
-offset_right = 200.0
-offset_bottom = 218.0
+offset_left = 172.0
+offset_top = 124.0
+offset_right = 212.0
+offset_bottom = 164.0
 
 [node name="ClericButton1" type="Button" parent="SkillPanel/SkillPopupCleric"]
 layout_mode = 2
@@ -213,10 +221,10 @@ size_flags_horizontal = 0
 
 [node name="SkillPopupValkyrie" type="HBoxContainer" parent="SkillPanel"]
 layout_mode = 0
-offset_left = 163.0
-offset_top = 250.0
-offset_right = 203.0
-offset_bottom = 290.0
+offset_left = 172.0
+offset_top = 177.0
+offset_right = 212.0
+offset_bottom = 217.0
 
 [node name="ValkyrieButton1" type="Button" parent="SkillPanel/SkillPopupValkyrie"]
 layout_mode = 2
@@ -227,6 +235,25 @@ layout_mode = 2
 size_flags_horizontal = 0
 
 [node name="ValkyrieButton3" type="Button" parent="SkillPanel/SkillPopupValkyrie"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="SkillPopupWizard" type="HBoxContainer" parent="SkillPanel"]
+layout_mode = 0
+offset_left = 171.0
+offset_top = 228.0
+offset_right = 211.0
+offset_bottom = 268.0
+
+[node name="WizardButton1" type="Button" parent="SkillPanel/SkillPopupWizard"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="WizardButton2" type="Button" parent="SkillPanel/SkillPopupWizard"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="WizardButton3" type="Button" parent="SkillPanel/SkillPopupWizard"]
 layout_mode = 2
 size_flags_horizontal = 0
 
@@ -242,5 +269,6 @@ text = "Voltar pro Game"
 [connection signal="pressed" from="Manager/CloseButton" to="Manager/Shop" method="_on_close_button_pressed"]
 [connection signal="pressed" from="knight_button" to="." method="_on_knight_button_pressed"]
 [connection signal="pressed" from="valkyrie_button" to="." method="_on_valkyrie_button_pressed"]
+[connection signal="pressed" from="wizard_button" to="." method="_on_wizard_button_pressed"]
 [connection signal="pressed" from="cleric_button" to="." method="_on_cleric_button_pressed"]
 [connection signal="pressed" from="SkillPanel/ConfirmButton" to="." method="_on_confirm_button_pressed"]

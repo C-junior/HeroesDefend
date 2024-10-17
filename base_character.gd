@@ -8,6 +8,7 @@ class_name BaseCharacter
 @onready var health_progress_bar = $HealthProgressBAr
 @onready var popuploc = $PopupLocation
 @onready var level_label: Label = $LevelLabel
+@export var lifesteal_percentage: float = 0.0  # Percentage of damage converted to health
 #@onready var skill_name_location: Marker2D = $SkillNameLocation
 
 
@@ -19,7 +20,7 @@ var is_stunned: bool = false  # Track stun state
 
 # Stats and growths
 @export var move_speed: int = 80
-@export var attack_range: float = 30.0
+@export var attack_range: float = 80.0
 @export var attack_damage: int = 10
 @export var attack_cooldown: float = 1.5
 @export var max_health: int = 100
@@ -31,7 +32,7 @@ var is_stunned: bool = false  # Track stun state
 
 # Base stats
 @export var base_move_speed: int = 80
-@export var base_attack_range: float = 30.0
+@export var base_attack_range: float = 80.0
 @export var base_attack_damage: int = 10
 @export var base_attack_cooldown: float = 1.5
 @export var base_max_health: int = 100
@@ -134,8 +135,17 @@ func update_health_label():
 func attack(target: Node2D):
 	if target.has_method("take_damage"):
 		target.take_damage(attack_damage)
+		apply_lifesteal(attack_damage)  # Apply lifesteal when attacking
 		attack_timer.start()
 
+# Apply lifesteal when damage is dealt
+func apply_lifesteal(damage_dealt: int) -> void:
+	var heal_amount = int(damage_dealt * lifesteal_percentage)
+	if heal_amount > 0:
+		current_health = min(current_health + heal_amount, max_health)  # Heal the character, but don't exceed max health
+		print("Lifesteal: healed", heal_amount, "HP from lifesteal.")
+		popuploc.popup(heal_amount)
+		update_health_label()
 # Handle taking damage
 # Activate the shield with a set number of blocks
 func activate_shield(blocks: int):
