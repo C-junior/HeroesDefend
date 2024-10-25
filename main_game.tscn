@@ -32,8 +32,6 @@ position = Vector2(335, 368)
 
 [node name="Wizard" parent="PlayerCharacters" instance=ExtResource("6_y5edn")]
 position = Vector2(189, 409)
-wizard_attack_damage = 62
-wizard_attack_cooldown = 2.0
 
 [node name="Enemies" type="Node2D" parent="."]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://140ddr4ip583"
-path="res://.godot/imported/vorpal_slash_icon.png-a0b80c50c4fca325b027682f445b051d.ctex"
+uid="uid://dckllmdakot3x"
+path="res://.godot/imported/shield_bashing_icon.png-9748824999107bc1fa861db9fb1d18c7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Skills/vorpal_slash_icon.png"
-dest_files=["res://.godot/imported/vorpal_slash_icon.png-a0b80c50c4fca325b027682f445b051d.ctex"]
+source_file="res://Assets/Icons/shield_bashing_icon.png"
+dest_files=["res://.godot/imported/shield_bashing_icon.png-9748824999107bc1fa861db9fb1d18c7.ctex"]
 
 [params]
 

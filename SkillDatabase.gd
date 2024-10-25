@@ -71,7 +71,7 @@ func _create_vorpal_slash() -> Skill:
 	vorpal_slash.name = "Vorpal Slash"
 	vorpal_slash.description = "Spin and deal 80% attack damage to nearby enemies."
 	vorpal_slash.cooldown = 10
-	vorpal_slash.icon = load("res://Assets/Icons/icon_vorpal_slash.png")
+	vorpal_slash.icon = load("res://Assets/Icons/vorpal_slash_icon.png")
 	return vorpal_slash
 
 func _create_weapon_mastery() -> Skill:
@@ -86,14 +86,14 @@ func _create_shield_bash() -> Skill:
 	shield_bash.name = "Shield Bash"
 	shield_bash.description = "Stun enemies for 2 seconds."
 	shield_bash.cooldown = 8
-	shield_bash.icon = load("res://Assets/Icons/icon_shield_bash.png")
+	shield_bash.icon = load("res://Assets/Icons/shield_bashing_icon.png")
 	return shield_bash
 
 func _create_defense_mastery() -> Skill:
 	var defense_mastery = load("res://Skills/defense_mastery.gd").new()
 	defense_mastery.name = "Defense Mastery"
 	defense_mastery.description = "Gain +5 defense."
-	defense_mastery.icon = load("res://Assets/Icons/icon_defense_mastery.png")
+	defense_mastery.icon = load("res://Assets/Icons/defense_mastery_icon.png")
 	return defense_mastery
 
 func _create_charge() -> Skill:
@@ -101,7 +101,7 @@ func _create_charge() -> Skill:
 	charge.name = "Charge"
 	charge.description = "Knockback all enemies in your path."
 	charge.cooldown = 10
-	charge.icon = load("res://Assets/Icons/icon_charge.png")
+	charge.icon = load("res://Assets/Icons/charge_icon.png")
 	return charge
 
 func _create_big_shield() -> Skill:
@@ -124,7 +124,7 @@ func _create_might_aura() -> Skill:
 	might_aura.name = "Might Aura"
 	might_aura.description = "Reduce attack and defense of all nearby enemies."
 	might_aura.cooldown = 15
-	might_aura.icon = load("res://Assets/Icons/icon_might_aura.png")
+	might_aura.icon = load("res://Assets/Icons/might_aura_icon.png")
 	return might_aura
 
 func _create_taunt() -> Skill:
@@ -256,7 +256,7 @@ func _create_ice_nova() -> Skill:
 	var ice_nova = load("res://Skills/Wizard/ice_nova.gd").new()
 	ice_nova.name = "Ice Nova"
 	ice_nova.description = "Deal 50 damage and slow enemies in an area."
-	ice_nova.cooldown = 8
+	ice_nova.cooldown = 3
 	ice_nova.icon = load("res://Assets/Icons/icon_ice_nova.png")
 	return ice_nova
 

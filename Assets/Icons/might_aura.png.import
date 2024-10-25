@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bakr7dingwnbc"
-path="res://.godot/imported/defense_stance_icon.png-355c9df1b939e5c29513384385fe0f31.ctex"
+uid="uid://rmnrqwefeu7l"
+path="res://.godot/imported/might_aura.png-07409d26f1a0b5db8cb5377a4a92fe08.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Skills/defense_stance_icon.png"
-dest_files=["res://.godot/imported/defense_stance_icon.png-355c9df1b939e5c29513384385fe0f31.ctex"]
+source_file="res://Assets/Icons/might_aura.png"
+dest_files=["res://.godot/imported/might_aura.png-07409d26f1a0b5db8cb5377a4a92fe08.ctex"]
 
 [params]
 

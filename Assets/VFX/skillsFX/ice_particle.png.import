@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b0qblllh4lxto"
-path="res://.godot/imported/berserker_mode.png-4931e0b7124ebabe8f6a47cdc0f2e958.ctex"
+uid="uid://i86xk6bu6grf"
+path="res://.godot/imported/ice_particle.png-2822c8a933dbadf537624e078af41ff8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Skills/berserker_mode.png"
-dest_files=["res://.godot/imported/berserker_mode.png-4931e0b7124ebabe8f6a47cdc0f2e958.ctex"]
+source_file="res://Assets/VFX/skillsFX/ice_particle.png"
+dest_files=["res://.godot/imported/ice_particle.png-2822c8a933dbadf537624e078af41ff8.ctex"]
 
 [params]
 
