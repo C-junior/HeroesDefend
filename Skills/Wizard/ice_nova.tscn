@@ -164,7 +164,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"ice_nova",
-"speed": 20.0
+"speed": 10.0
 }]
 
 [node name="IceNova" type="Area2D"]
@@ -189,4 +189,4 @@ shape = SubResource("CircleShape2D_bd6fh")
 modulate = Color(0.8, 1, 2.2, 1)
 sprite_frames = SubResource("SpriteFrames_elvfn")
 animation = &"ice_nova"
-frame_progress = 0.219564
+frame_progress = 0.774628

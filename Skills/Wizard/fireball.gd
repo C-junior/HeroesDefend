@@ -1,7 +1,7 @@
 # fireball.gd
 extends Skill
 
-@export var damage_percentage: float = 1.0  # 100% of attack damage
+@export var damage_percentage: float = 3.0  # 100% of attack damage
 @export var projectile_scene: PackedScene = preload("res://Skills/Wizard/fireball.tscn")  # Fireball scene
 @export var speed: float = 400.0  # Speed of the fireball
 

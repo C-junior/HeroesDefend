@@ -59,8 +59,8 @@ func _ready():
 	skills[Constants.CharacterType.MAGE] = {
 		2: [
 			_create_fireball(),
-			_create_ice_nova(),
-			_create_defense_mastery()
+			_create_arcane_shield(),
+			_create_chain_lightning()
 		],
 		}
 # Create Vorpal Slash skill
@@ -252,16 +252,37 @@ func _create_fireball() -> Skill:
 	fireball.icon = load("res://Assets/Icons/icon_fireball.png")
 	return fireball
 
+func _create_meteor_strike() -> Skill:
+	var meteor_strike = load("res://Skills/Wizard/meteor_strike.gd").new()
+	meteor_strike.name = "Meteor Strike"
+	meteor_strike.description = "Calls down a massive meteor to deal AoE damage to all enemies within range."
+	meteor_strike.cooldown = 10  # Adjust as needed
+	meteor_strike.icon = load("res://Assets/Icons/icon_meteor_strike.png")
+	return meteor_strike
+
 func _create_ice_nova() -> Skill:
 	var ice_nova = load("res://Skills/Wizard/ice_nova.gd").new()
 	ice_nova.name = "Ice Nova"
-	ice_nova.description = "Deal 50 damage and slow enemies in an area."
-	ice_nova.cooldown = 3
+	ice_nova.description = "Unleashes a wave of frost, damaging and slowing enemies in an area."
+	ice_nova.cooldown = 8
 	ice_nova.icon = load("res://Assets/Icons/icon_ice_nova.png")
 	return ice_nova
 
-
-
+func _create_arcane_shield() -> Skill:
+	var arcane_shield = load("res://Skills/Wizard/arcane_shield.gd").new()
+	arcane_shield.name = "Arcane Shield"
+	arcane_shield.description = "Summons a shield that absorbs damage for a short duration."
+	arcane_shield.cooldown = 12
+	arcane_shield.icon = load("res://Assets/VFX/skillsFX/spr_shield.png")
+	return arcane_shield
+func _create_chain_lightning():
+	var chain_lightning = load("res://Skills/Wizard/chain_lightning.gd").new()
+	chain_lightning.name = "Chain Lightning"
+	chain_lightning.description = "Unleashes a wave of frost, damaging and slowing enemies in an area."
+	chain_lightning.cooldown = 3
+	chain_lightning.icon = load("res://Assets/Icons/icon_chain_lightning.png")
+	return chain_lightning
+	
 # Fetch skills based on character type and level
 func get_skills_for_level(character_type: int, level: int) -> Array:
 	if character_type in skills and level in skills[character_type]:

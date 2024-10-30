@@ -24,12 +24,11 @@ func _physics_process(delta: float):
 	position += direction * speed * delta
 
 	# Optional: Remove fireball if it goes offscreen (to save memory)
-	if position.x > 2000 or position.x < -2000:
+	if position.x > 600 or position.x < -600:
 		queue_free()
 
 # When the fireball hits something
 func _on_body_entered(body):
-	if body.is_in_group("Enemies"):
-		if body.has_method("take_damage"):
-			body.take_damage(damage)
-		queue_free()  # Destroy the fireball after it hits
+	if body.is_in_group("Enemies") and body.has_method("take_damage"):
+		body.take_damage(damage)
+		 # Destroy the fireball after it hits

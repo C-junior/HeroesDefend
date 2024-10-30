@@ -13,6 +13,8 @@ class_name BaseCharacter
 
 
 #skills var
+var shield_active: bool = false  # Indicates if the shield is active
+var arcane_shield_skill: Skill = null  # Reference to the active Arcane Shield skill
 var shield_block_count: int = 0  # Tracks how many attacks can be blocked
 var is_stunned: bool = false  # Track stun state
 @export var stun_timer: Timer = Timer.new()
@@ -154,6 +156,9 @@ func activate_shield(blocks: int):
 
 # Override the take_damage method to reduce block count if shield is active
 func take_damage(damage: int):
+	if shield_active and arcane_shield_skill != null:
+		# Call the absorb_damage function in the arcane shield skill
+		damage = arcane_shield_skill.absorb_damage(damage, self)  # Only reduce damage if shield was applied
 	if is_invincible:
 		self.sprite.modulate = Color(1,1,0)
 		print(name, "is invincible and took no damage!")
