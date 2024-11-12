@@ -46,6 +46,11 @@ func _ready():
 	# Initialize with Knight as the default active character
 	switch_to_character(knight)
 	set_buttons_transparency(true)
+	
+	#for skill_knight_buttons in knight_buttons.get_children():
+		#skill_knight_buttons. .expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		#skill_knight_buttons.custom_minimum_size = Vector2(50, 50)
+	#
 
 enum MODE {
 	INVENTORY,

@@ -120,6 +120,7 @@ text = "Next wave"
 
 [node name="StatsDisplay" parent="Manager" instance=ExtResource("6_85g5e")]
 unique_name_in_owner = true
+layout_mode = 0
 offset_left = 254.0
 offset_top = 138.0
 offset_right = 428.0
@@ -187,21 +188,23 @@ unique_name_in_owner = true
 layout_mode = 2
 
 [node name="SkillPanel" type="Panel" parent="."]
-offset_left = 67.0
-offset_top = 44.0
-offset_right = 675.0
-offset_bottom = 426.0
+offset_left = 51.0
+offset_top = 6.0
+offset_right = 703.0
+offset_bottom = 476.0
 
 [node name="SkillPopupKnight" type="HBoxContainer" parent="SkillPanel"]
 layout_mode = 0
-offset_left = 171.0
-offset_top = 69.0
-offset_right = 211.0
-offset_bottom = 109.0
+offset_left = 55.0
+offset_top = 6.0
+offset_right = 304.0
+offset_bottom = 86.0
+alignment = 1
 
 [node name="KnightButton1" type="Button" parent="SkillPanel/SkillPopupKnight"]
 layout_mode = 2
 size_flags_horizontal = 0
+text = "Shield Bashing"
 
 [node name="KnightButton2" type="Button" parent="SkillPanel/SkillPopupKnight"]
 layout_mode = 2
@@ -213,10 +216,11 @@ size_flags_horizontal = 0
 
 [node name="SkillPopupCleric" type="HBoxContainer" parent="SkillPanel"]
 layout_mode = 0
-offset_left = 172.0
-offset_top = 124.0
-offset_right = 212.0
-offset_bottom = 164.0
+offset_left = 55.0
+offset_top = 230.0
+offset_right = 95.0
+offset_bottom = 270.0
+alignment = 1
 
 [node name="ClericButton1" type="Button" parent="SkillPanel/SkillPopupCleric"]
 layout_mode = 2
@@ -232,10 +236,11 @@ size_flags_horizontal = 0
 
 [node name="SkillPopupValkyrie" type="HBoxContainer" parent="SkillPanel"]
 layout_mode = 0
-offset_left = 172.0
-offset_top = 177.0
-offset_right = 212.0
-offset_bottom = 217.0
+offset_left = 55.0
+offset_top = 118.0
+offset_right = 95.0
+offset_bottom = 158.0
+alignment = 1
 
 [node name="ValkyrieButton1" type="Button" parent="SkillPanel/SkillPopupValkyrie"]
 layout_mode = 2
@@ -251,10 +256,11 @@ size_flags_horizontal = 0
 
 [node name="SkillPopupWizard" type="HBoxContainer" parent="SkillPanel"]
 layout_mode = 0
-offset_left = 171.0
-offset_top = 228.0
-offset_right = 211.0
-offset_bottom = 268.0
+offset_left = 55.0
+offset_top = 342.0
+offset_right = 95.0
+offset_bottom = 382.0
+alignment = 1
 
 [node name="WizardButton1" type="Button" parent="SkillPanel/SkillPopupWizard"]
 layout_mode = 2
@@ -270,11 +276,11 @@ size_flags_horizontal = 0
 
 [node name="ConfirmButton" type="Button" parent="SkillPanel"]
 layout_mode = 0
-offset_left = 168.0
-offset_top = 328.0
-offset_right = 176.0
-offset_bottom = 336.0
-text = "Voltar pro Game"
+offset_left = 517.0
+offset_top = 429.0
+offset_right = 653.0
+offset_bottom = 460.0
+text = "Back to Game"
 
 [connection signal="pressed" from="Manager/RerollButton" to="Manager/Shop" method="_on_reroll_button_pressed"]
 [connection signal="pressed" from="Manager/CloseButton" to="Manager/Shop" method="_on_close_button_pressed"]
