@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cml66u1eb3rpo"
-path="res://.godot/imported/icon_fireball.png-e726a2fa948ee0f99f00833f7b5aa64c.ctex"
+uid="uid://c6m2mtg8ebcnw"
+path="res://.godot/imported/lightbringer.png-9778ebf115b52d8c1015159e20c19c25.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Icons/icon_fireball.png"
-dest_files=["res://.godot/imported/icon_fireball.png-e726a2fa948ee0f99f00833f7b5aa64c.ctex"]
+source_file="res://Assets/Items/lightbringer.png"
+dest_files=["res://.godot/imported/lightbringer.png-9778ebf115b52d8c1015159e20c19c25.ctex"]
 
 [params]
 

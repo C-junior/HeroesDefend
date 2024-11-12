@@ -23,6 +23,8 @@ extends CanvasLayer
 @onready var wizard = get_node("/root/MainGame/PlayerCharacters/Wizard")  # Reference to wizard
 
 @onready var wave_manager = get_node("/root/MainGame")  # The wave manager
+@onready var stats_display: PanelContainer = %StatsDisplay
+
 
 var skills_selected_knight = false
 var skills_selected_cleric = false
@@ -38,7 +40,7 @@ var active_character: BaseCharacter = null
 func _ready():
 	# Listen for the wave signal to trigger skill selection
 	wave_manager.connect("wave_skill_popup", Callable(self, "_show_skill_selection"))
-
+	stats_display.get_children(1)
 	# Hide the skill panel initially
 	skill_panel.visible = false
 	# Initialize with Knight as the default active character
@@ -88,21 +90,22 @@ func _on_wizard_button_pressed() -> void:
 # Function to switch to the selected character and update the shared inventory
 func switch_to_character(character: BaseCharacter):
 	active_character = character
-
-	# Emit signal to update inventory UI for the active character
 	emit_signal("character_switched", active_character)
 
-	# Update the shared inventory with the active character's items
+	# Update inventory display for the new character
 	update_inventory_with_character_items(character)
+
+	# Update stats display with the new active character's stats
+	update_ui_stats()
 
 	print("Switched to character:", active_character.name)
 
 func update_inventory_with_character_items(character: BaseCharacter):
-	# Clear the inventory first
+	# Clear the inventory slots first
 	for slot in inventory.get_children():
 		slot.item = null
 
-	# Add items that can be equipped by the active character
+	# Add equipped items back to their respective slots
 	for slot_name in character.equipped_items.keys():
 		var item = character.equipped_items[slot_name]
 		if item != null and character.can_equip(item):
@@ -112,6 +115,15 @@ func update_inventory_with_character_items(character: BaseCharacter):
 				inventory.get_children()[1].item = item
 			elif slot_name == "accessory":
 				inventory.get_children()[2].item = item
+
+	# Call update_ui_stats to refresh stats display when items are equipped
+	update_ui_stats()
+
+# Function to update stats using the active character
+func update_ui_stats():
+	if stats_display:
+		stats_display.update_stats(active_character)
+		
 
 # Show skill selection once per wave (every 5th wave)
 func _show_skill_selection():
@@ -206,3 +218,6 @@ func _reset_skill_buttons():
 
 func _on_confirm_button_pressed() -> void:
 	_on_confirm_skills()
+	
+func _process(delta: float) -> void:
+	update_ui_stats()

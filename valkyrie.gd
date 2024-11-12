@@ -40,11 +40,11 @@ func _ready():
 	learned_skills = []
 
 # Valkyrie-specific weapon restrictions
-func can_equip(item: Item) -> bool:
-	# Valkyries can equip spears and swords
-	if item.name == "Spear" or item.name == "Iron Sword":
-		return true
-	return false
+#func can_equip(item: Item) -> bool:
+	## Valkyries can equip spears and swords
+	#if item.name == "Spear" or item.name == "Iron Sword":
+		#return true
+	#return false
 
 # Learn a new skill and initialize it for the Cleric
 func learn_skill(skill: Skill):

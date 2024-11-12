@@ -41,6 +41,7 @@ animations = [{
 }]
 
 [node name="Vendor" type="AnimatedSprite2D"]
+position = Vector2(-4, -8)
 sprite_frames = SubResource("SpriteFrames_udhv6")
 autoplay = "default"
 frame_progress = 0.0924173

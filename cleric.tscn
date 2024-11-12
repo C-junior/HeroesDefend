@@ -76,7 +76,4 @@ offset_top = -50.0
 offset_right = 20.0
 offset_bottom = -27.0
 
-[node name="HealthProgressBAr" parent="." index="7"]
-z_index = 0
-
 [node name="FloatingNumbers" parent="." index="8" instance=ExtResource("4_662if")]

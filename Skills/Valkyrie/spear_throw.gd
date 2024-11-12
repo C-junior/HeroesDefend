@@ -1,10 +1,12 @@
+# spear_throw.gd
 extends Skill
 
-@export var damage_percentage: float = 4.0  # 100% attack damage
-@export var skill_range: int = 500  # Range to throw the spear
+@export var damage_percentage: float = 4.0  # 400% attack damage
+@export var skill_range: int = 500
+@export var spear_projectile_scene: PackedScene = preload("res://Skills/Valkyrie/spear_projectile.tscn")
+
 var cooldown_timer: Timer = null
 
-# Initialize the cooldown timer
 func init(character: BaseCharacter) -> void:
 	cooldown_timer = Timer.new()
 	cooldown_timer.one_shot = true
@@ -14,12 +16,12 @@ func init(character: BaseCharacter) -> void:
 
 func apply_effect(character: BaseCharacter) -> void:
 	if not cooldown_timer.is_stopped():
-		return  # Skill is in cooldown
+		return
 
 	_trigger_spear_throw(character)
 	cooldown_timer.start()
 
-# Find the farthest enemy and deal damage
+# Find the farthest enemy and launch the spear projectile
 func _trigger_spear_throw(character: BaseCharacter) -> void:
 	var enemies = character.get_tree().get_nodes_in_group("Enemies")
 	var farthest_enemy: Node2D = null
@@ -32,10 +34,13 @@ func _trigger_spear_throw(character: BaseCharacter) -> void:
 			max_distance = distance
 			farthest_enemy = enemy
 
-	# Deal damage to the farthest enemy
-	if farthest_enemy and farthest_enemy.has_method("take_damage"):
-		farthest_enemy.take_damage(character.attack_damage * damage_percentage)
-		print("Spear Throw hit:", farthest_enemy.name)
+	# Launch spear projectile at the farthest enemy
+	if farthest_enemy:
+		var spear = spear_projectile_scene.instantiate() as Area2D
+		spear.global_position = character.global_position  # Start at the character's position
+		spear.setup(farthest_enemy, character.attack_damage * damage_percentage)  # Set target and damage
+		character.get_parent().add_child(spear)
+		print("Spear Throw launched towards:", farthest_enemy.name)
 
 func _on_cooldown_ready():
 	print("Spear Throw is ready again!")

@@ -2,9 +2,9 @@
 extends BaseCharacter
 
 @export var enemy_name: String = "Goblin"
-@export var enemy_attack_damage: int = 48
+@export var enemy_attack_damage: int = 28
 @export var enemy_move_speed: int = 40
-@export var goblin_max_health: int = 1000
+@export var goblin_max_health: int = 100
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 var knockback_velocity: Vector2 = Vector2.ZERO  # Store the knockback force
@@ -30,14 +30,14 @@ func _ready():
 
 func _process(delta: float):
 	# If taunt is active, attack the knight
-	if target and taunt_timer.time_left > 0:
+	if target and taunt_timer and taunt_timer.time_left > 0:
 		move_and_attack(target, delta)
 	else:
 		# Find nearest player character to attack if not taunted
 		target = find_nearest_target("PlayerCharacters")
 		if target:
 			move_and_attack(target, delta)
-	
+
 	# Apply knockback if there is any force left
 	if knockback_velocity.length() > 0:
 		# Set the velocity and call move_and_slide

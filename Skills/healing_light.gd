@@ -2,6 +2,7 @@
 extends Skill
 
 @export var heal_percentage: float = 0.2  # 20% of max health
+@export var healing_effect_scene: PackedScene = preload("res://Skills/Cleric/healing_light_effect.tscn")  # Healing visual effect scene
 
 var cooldown_timer: Timer = null
 
@@ -26,6 +27,11 @@ func _trigger_healing_light(character: BaseCharacter) -> void:
 		var heal_amount = ally.get_max_health() * heal_percentage
 		ally.receive_heal(heal_amount)
 		print("Healing Light healed ", ally.name, " for ", heal_amount)
+
+		# Create the healing visual effect above the healed ally
+		var healing_effect = healing_effect_scene.instantiate() as Node2D
+		healing_effect.global_position = ally.global_position + Vector2(0, -20)  # Position slightly above the ally
+		ally.get_parent().add_child(healing_effect)  # Add to ally's parent to follow game structure
 
 func _on_cooldown_ready():
 	print("Healing Light is ready again!")

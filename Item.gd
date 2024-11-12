@@ -7,6 +7,7 @@ class_name Item
 @export var type: String  # "weapon", "armor", or "accessory"
 @export var attack_bonus: int = 0
 @export var defense_bonus: int = 0
+@export var attack_cooldown_modifier: float = 1.0
 @export var speed_bonus: int = 0
 @export var health_bonus: int = 0
 @export var price: int = 100

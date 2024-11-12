@@ -1,10 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://ck34trga36w3"]
+[gd_scene load_steps=8 format=3 uid="uid://ck34trga36w3"]
 
 [ext_resource type="Script" path="res://ui.gd" id="1_bhicx"]
 [ext_resource type="Script" path="res://manager.gd" id="2_qn4ti"]
 [ext_resource type="Script" path="res://inventory.gd" id="3_362i1"]
 [ext_resource type="PackedScene" uid="uid://dryra2oqvkefx" path="res://slot.tscn" id="4_uyso4"]
 [ext_resource type="Script" path="res://shop.gd" id="5_mdeu6"]
+[ext_resource type="PackedScene" uid="uid://b1tts0yfudpdg" path="res://statsdisplay.tscn" id="6_85g5e"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_lup7p"]
+font_size = 8
 
 [node name="UI" type="CanvasLayer"]
 process_mode = 3
@@ -32,9 +36,9 @@ slot_type = 0
 
 [node name="Label2" type="Label" parent="Manager/Inventory/Slot"]
 layout_mode = 2
+size_flags_vertical = 1
 text = "Weapon"
-horizontal_alignment = 1
-vertical_alignment = 1
+label_settings = SubResource("LabelSettings_lup7p")
 
 [node name="Slot2" parent="Manager/Inventory" instance=ExtResource("4_uyso4")]
 layout_mode = 2
@@ -44,9 +48,9 @@ slot_type = 1
 
 [node name="Label2" type="Label" parent="Manager/Inventory/Slot2"]
 layout_mode = 2
+size_flags_vertical = 1
 text = "Armor"
-horizontal_alignment = 1
-vertical_alignment = 1
+label_settings = SubResource("LabelSettings_lup7p")
 
 [node name="Slot3" parent="Manager/Inventory" instance=ExtResource("4_uyso4")]
 layout_mode = 2
@@ -56,9 +60,9 @@ slot_type = 2
 
 [node name="Label2" type="Label" parent="Manager/Inventory/Slot3"]
 layout_mode = 2
-text = "Acessory"
-horizontal_alignment = 1
-vertical_alignment = 1
+size_flags_vertical = 1
+text = "Accessory"
+label_settings = SubResource("LabelSettings_lup7p")
 
 [node name="Shop" type="GridContainer" parent="Manager"]
 unique_name_in_owner = true
@@ -114,36 +118,43 @@ offset_right = 8.0
 offset_bottom = 8.0
 text = "Next wave"
 
+[node name="StatsDisplay" parent="Manager" instance=ExtResource("6_85g5e")]
+unique_name_in_owner = true
+offset_left = 254.0
+offset_top = 138.0
+offset_right = 428.0
+offset_bottom = 273.0
+
 [node name="knight_button" type="Button" parent="."]
 unique_name_in_owner = true
-offset_left = 51.0
-offset_top = 172.0
-offset_right = 188.0
-offset_bottom = 203.0
+offset_left = 46.0
+offset_top = 108.0
+offset_right = 183.0
+offset_bottom = 139.0
 text = "Knight Inventory"
 
 [node name="valkyrie_button" type="Button" parent="."]
 unique_name_in_owner = true
-offset_left = 47.0
-offset_top = 135.0
-offset_right = 196.0
-offset_bottom = 166.0
+offset_left = 46.0
+offset_top = 147.0
+offset_right = 195.0
+offset_bottom = 178.0
 text = "Valkyrie Inventory"
 
 [node name="wizard_button" type="Button" parent="."]
 unique_name_in_owner = true
-offset_left = 52.0
-offset_top = 249.0
-offset_right = 201.0
-offset_bottom = 280.0
+offset_left = 46.0
+offset_top = 225.0
+offset_right = 195.0
+offset_bottom = 256.0
 text = "Wizard Inventory"
 
 [node name="cleric_button" type="Button" parent="."]
 unique_name_in_owner = true
-offset_left = 54.0
-offset_top = 210.0
-offset_right = 184.0
-offset_bottom = 241.0
+offset_left = 47.0
+offset_top = 186.0
+offset_right = 177.0
+offset_bottom = 217.0
 text = "Cleric Inventory"
 
 [node name="Inventory_switch" type="Panel" parent="."]
