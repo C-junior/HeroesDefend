@@ -22,13 +22,14 @@ animations = [{
 [node name="GoblinShaman" groups=["Enemies"] instance=ExtResource("1_e7h7i")]
 script = ExtResource("2_ojoy7")
 magic_attack_damage = 35
-shaman_attack_range = 250.0
+shaman_attack_range = 350.0
 enemy_name = "Goblin"
 enemy_attack_damage = 28
 enemy_move_speed = 40
 goblin_max_health = 100
 xp_reward = 100
-gold_reward = 20
+min_gold_reward = 10
+max_gold_reward = 20
 
 [node name="HP" parent="." index="1"]
 offset_left = -18.0

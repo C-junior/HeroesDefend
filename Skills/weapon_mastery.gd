@@ -1,7 +1,7 @@
 # weapon_mastery.gd
 extends Skill
 
-@export var attack_bonus: int = 110  # +10 attack bonus
+@export var attack_bonus: int = 10  # +10 attack bonus
 
 
 func apply_effect(character: BaseCharacter) -> void:

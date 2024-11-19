@@ -29,18 +29,18 @@ func update_stats(character):
 	var attack_speed_label = $VBoxContainer.get_node("AttackSpeedLabel")
 	
 	if name_label:
-		name_label.bbcode_text = "[b]Class:[/b] " + str(character.name)
+		name_label.bbcode_text = "   [b]Class:[/b] " + str(character.name)
 	if attack_label:
-		attack_label.bbcode_text = "[b]ATK:[/b] " + str(character.attack_damage)
+		attack_label.bbcode_text = "   [b]ATK:[/b] " + str(character.attack_damage)
 	if defense_label:
-		defense_label.bbcode_text = "[b]DEF:[/b] " + str(character.defense)
+		defense_label.bbcode_text = "   [b]DEF:[/b] " + str(character.defense)
 	if speed_label:
-		speed_label.bbcode_text = "[b]SPD:[/b] " + str(character.move_speed)
+		speed_label.bbcode_text = "   [b]SPD:[/b] " + str(character.move_speed)
 	if health_label:
-		health_label.bbcode_text = "[b]HP:[/b] " + str(character.current_health) + "/" + str(character.max_health)
+		health_label.bbcode_text = "   [b]HP:[/b] " + str(character.current_health) + "/" + str(character.max_health)
 	if attack_speed_label:
 		var attack_speed = int((1.0 - character.attack_cooldown) * 100)
 		var color = "green" if attack_speed > 51 else "red"
-		attack_speed_label.bbcode_text = "[b]Attack Speed:[/b] [color=%s]%d%%[/color]" % [color, attack_speed]
+		attack_speed_label.bbcode_text = "   [b]Attack Speed:[/b] [color=%s]%d%%[/color]" % [color, attack_speed]
 	else:
 		print("Labels not updated correctly")

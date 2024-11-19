@@ -116,7 +116,7 @@ func _create_healing_light() -> Skill:
 	var healing_light = load("res://Skills/healing_light.gd").new()
 	healing_light.name = "Healing Light"
 	healing_light.description = "Heal an ally for 20% of max health."
-	healing_light.cooldown = 2
+	healing_light.cooldown = 10
 	healing_light.icon = load("res://Assets/Icons/healing_light_icon.png")
 	return healing_light
 

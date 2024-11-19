@@ -14,13 +14,13 @@ alignment = 1
 [node name="Name" type="RichTextLabel" parent="VBoxContainer"]
 layout_mode = 2
 bbcode_enabled = true
-text = "Knight"
+text = "   Knight"
 fit_content = true
 
 [node name="AttackLabel" type="RichTextLabel" parent="VBoxContainer"]
 layout_mode = 2
 bbcode_enabled = true
-text = "asdda"
+text = "   asdda"
 fit_content = true
 
 [node name="DefenseLabel" type="RichTextLabel" parent="VBoxContainer"]

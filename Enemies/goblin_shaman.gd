@@ -2,10 +2,12 @@
 extends "res://Enemies/enemy.gd"
 
 @export var magic_attack_damage: int = 35
-@export var shaman_attack_range: float = 250.0  # Range for casting spells
+@export var shaman_attack_range: float = 350.0  # Range for casting spells
 
 func _ready():
 	enemy_name = "Goblin Shaman"
+	min_gold_reward = 20  # Minimum gold to drop
+	max_gold_reward = 45 # Maximum gold to drop
 	enemy_attack_damage = magic_attack_damage
 	enemy_move_speed = 50
 	goblin_max_health = 800

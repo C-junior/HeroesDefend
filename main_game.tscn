@@ -22,6 +22,7 @@ texture = ExtResource("1_5dba5")
 [node name="PlayerCharacters" type="Node2D" parent="."]
 
 [node name="Knight" parent="PlayerCharacters" instance=ExtResource("2_nqt4s")]
+visible = false
 position = Vector2(316, 200)
 
 [node name="Cleric" parent="PlayerCharacters" instance=ExtResource("3_jng1e")]
@@ -53,7 +54,7 @@ offset_left = 127.0
 offset_top = 98.0
 offset_right = 167.0
 offset_bottom = 121.0
-text = "knight atk"
+text = "speed up"
 
 [node name="knight def" type="Label" parent="."]
 offset_left = 129.0
@@ -61,3 +62,10 @@ offset_top = 69.0
 offset_right = 208.0
 offset_bottom = 92.0
 text = "knight atk"
+
+[node name="Button" type="Button" parent="."]
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Speed Up"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

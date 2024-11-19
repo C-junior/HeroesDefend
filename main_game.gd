@@ -29,8 +29,7 @@ func _ready():
 	add_child(wave_manager)  # Add wave_manager to the scene tree
 	wave_manager_timer.connect("timeout",Callable( self, "_on_wave_timer_timeout"))  # Connect timer to wave start
 	wave_manager_timer.start(1.0)  # Start timer with delay for the initial wave
-	knight_atk.text = str(knight.knight_attack_damage)
-	knight_def.text = str(knight.knight_defense)
+	
 
 func _on_wave_timer_timeout():
 	if wave_in_progress:
@@ -88,3 +87,8 @@ func close_shop():
 func _process(delta: float):
 	# Check if the wave is completed in each frame
 	check_wave_completion()
+
+
+func _on_button_pressed() -> void:
+	Engine.time_scale = 2
+	

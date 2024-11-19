@@ -92,16 +92,21 @@ func _on_taunt_end() -> void:
 	target = null  # Reset the target after taunt ends
 
 @export var xp_reward: int = 100
-@export var gold_reward: int = 20
+@export var min_gold_reward: int = 10  # Minimum gold to drop
+@export var max_gold_reward: int = 20  # Maximum gold to drop
 
-# Override the die function to reward XP and gold
+# Override the die function to reward XP and random gold
 func die():
-	# Grant XP and gold to all player characters
+	# Grant XP and random gold to all player characters
 	var party_manager = get_tree().root.get_node("MainGame/PlayerCharacters")
 	
+	# Calculate random gold reward
+	var random_gold_reward = randi() % (max_gold_reward - min_gold_reward + 1) + min_gold_reward
+
 	for player in party_manager.get_children():
 		if player.has_method("add_xp_to_party"):
 			player.add_xp_to_party(xp_reward)
-			player.add_gold(gold_reward)
+			player.add_gold(random_gold_reward)
+			print(random_gold_reward," receberam")
 
 	queue_free()

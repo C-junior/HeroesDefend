@@ -7,6 +7,8 @@ var is_in_frenzy: bool = false
 
 func _ready():
 	enemy_name = "Goblin Berserker"
+	min_gold_reward = 15  # Minimum gold to drop
+	max_gold_reward = 40 # Maximum gold to drop
 	enemy_attack_damage = 60
 	enemy_move_speed = 60
 	goblin_max_health = 1000

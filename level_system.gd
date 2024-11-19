@@ -17,8 +17,9 @@ func add_xp(amount: int):
 
 func level_up():
 	level += 1
-	xp_to_next_level = int(xp_to_next_level * 1.5)  # Increase the XP needed for the next level
+	xp_to_next_level = int(xp_to_next_level * 2.5)  # Increase the XP needed for the next level
 	emit_signal("leveled_up")
+	print(xp_to_next_level, "necessario pro proximo lvl")
 
 func get_gold_reward() -> int:
 	return gold_reward

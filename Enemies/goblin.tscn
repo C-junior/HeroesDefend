@@ -61,7 +61,8 @@ enemy_attack_damage = 28
 enemy_move_speed = 40
 goblin_max_health = 100
 xp_reward = 100
-gold_reward = 20
+min_gold_reward = 10
+max_gold_reward = 20
 
 [node name="HP" parent="." index="1"]
 offset_left = -18.0

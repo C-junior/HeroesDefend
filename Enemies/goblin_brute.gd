@@ -3,6 +3,8 @@ extends "res://Enemies/enemy.gd"
 
 func _ready():
 	# Customize specific stats for Goblin Brute
+	min_gold_reward = 10  # Minimum gold to drop
+	max_gold_reward = 30 # Maximum gold to drop
 	enemy_name = "Goblin Brute"
 	enemy_attack_damage = 70
 	enemy_move_speed = 30
